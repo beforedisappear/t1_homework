@@ -1,3 +1,10 @@
+import { Cart } from "@/components/cart/Cart";
+
 export function CartPage() {
-  return <>cart page</>;
+  return (
+    <>
+      <h1>My cart</h1>
+      <Cart />
+    </>
+  );
 }
