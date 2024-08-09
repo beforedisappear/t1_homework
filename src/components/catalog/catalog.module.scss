@@ -1,5 +1,29 @@
 .catalog {
-  padding: 0px 130px;
+  display: flex;
+  flex-direction: column;
+  row-gap: 48px;
   width: 1180px;
   margin: 0 auto;
+  padding: 50px 0px;
+
+  > h1 {
+    color: var(--gray);
+    font-weight: 700;
+    font-size: 36px;
+  }
+
+  > button {
+    width: 177px;
+    height: 62px;
+    padding: 10px;
+    margin: 0 auto;
+
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
 }

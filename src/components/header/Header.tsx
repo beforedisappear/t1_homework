@@ -1,5 +1,5 @@
 import styles from "./header.module.scss";
-import Cart from "@/assets/icons/header/cart.svg?svgr";
+import Cart from "@/assets/icons/common/cart.svg?svgr";
 
 import { Link } from "react-router-dom";
 
