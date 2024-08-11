@@ -17,6 +17,7 @@ export function CartFormItem({ index }: { index: number }) {
       className={cn(styles.cart_form_item, {
         [styles.deleted]: counterValue === 0,
       })}
+      aria-label={`product card №${index + 1} in cart`}
     >
       <div className={styles.cart_form_item_info}>
         <img src={sneakersImg} alt={"sneakers item №4"} />

@@ -4,7 +4,10 @@ import sneakersImg from "@/assets/images/productGallery/sneakers.jpg";
 
 export function ProductGallery() {
   return (
-    <section className={styles.product_gallery}>
+    <section
+      className={styles.product_gallery}
+      aria-label={"product card images slider"}
+    >
       <div className={styles.product_gallery_main_photo}>
         <img
           src={sneakersImg}
@@ -20,6 +23,7 @@ export function ProductGallery() {
             className={cn(styles.product_gallery_carousel_img, {
               [styles.active]: i === 0,
             })}
+            aria-label={`product image №${i + 1}`}
           >
             <img
               src={sneakersImg}

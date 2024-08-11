@@ -5,6 +5,7 @@ export function SearchBar() {
   return (
     <>
       <input
+        aria-label="search"
         className={cn(styles.search_bar, "input")}
         placeholder="Search by title"
       />

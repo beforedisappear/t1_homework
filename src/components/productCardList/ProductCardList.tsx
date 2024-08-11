@@ -13,7 +13,9 @@ export function ProductCardList() {
         ))}
       </ul>
 
-      <button className="primary_btn">show more</button>
+      <button aria-label="load more product cards" className="primary_btn">
+        show more
+      </button>
     </>
   );
 }

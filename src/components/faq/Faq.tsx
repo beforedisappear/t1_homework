@@ -34,6 +34,10 @@ export function Faq() {
                   [styles.showed]: showSection[i],
                 })}
                 onClick={() => onShowSection(i)}
+                aria-label={`${
+                  showSection[i] ? `Close` : `Open`
+                } accordion section`}
+                aria-expanded={showSection[i]}
               >
                 <div className={styles.faq_list_item_header}>
                   <p>{el.title}</p>

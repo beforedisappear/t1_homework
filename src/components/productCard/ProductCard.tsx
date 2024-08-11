@@ -17,7 +17,7 @@ export function ProductCard({ index }: IProps) {
   const url = `product/${index}`;
 
   return (
-    <li className={styles.product_card}>
+    <li aria-label={"product card №{index}"} className={styles.product_card}>
       <div className={styles.product_card_img}>
         <Link to={url}></Link>
         <img src={image} alt={`product card №${index}`} />
