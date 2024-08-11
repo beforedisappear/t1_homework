@@ -1,7 +1,10 @@
+@use "../../styles/variables.scss" as *;
+
 .faq {
   display: flex;
   background-color: var(--purple);
   min-height: 508px;
+  padding: 0px 30px;
   height: auto;
 
   &_content {
@@ -34,14 +37,12 @@
       display: flex;
       flex-direction: column;
       align-items: unset;
-      //FIXME: error
-      border-bottom: 1px solid var(--white) !important;
       height: 80px;
       cursor: pointer;
       overflow: hidden;
       transition: height 0.3s linear;
       background: unset;
-      border: unset;
+      border-bottom: 1px solid var(--white);
 
       &.showed {
         height: 153px;
@@ -77,6 +78,7 @@
           height: 25px;
           width: 25px;
           transition: transform 0.3s linear;
+          margin-left: 5px;
         }
       }
 
@@ -86,6 +88,64 @@
         font-weight: 600;
         font-size: 16px;
         line-height: 26px;
+      }
+    }
+  }
+}
+
+@media (max-width: $lg) {
+  .faq {
+    padding: 0px 20px;
+
+    &_content {
+      padding: 40px 0px;
+    }
+
+    &_title {
+      font-size: 28px;
+      line-height: 32px;
+    }
+
+    &_list {
+      &_item {
+        &.showed {
+          height: 170px;
+        }
+      }
+    }
+  }
+}
+
+@media (max-width: $md) {
+  .faq {
+    padding: 0px 16px;
+
+    &_content {
+      padding: 30px 0px;
+    }
+
+    &_title {
+      font-size: 24px;
+      line-height: 24px;
+    }
+
+    &_list {
+      &_item {
+        &_header {
+          > p {
+            font-size: 16px;
+            line-height: 20px;
+          }
+        }
+
+        > span {
+          font-size: 12px;
+          line-height: 18px;
+        }
+
+        &.showed {
+          height: 180px;
+        }
       }
     }
   }

@@ -1,16 +1,18 @@
+@use "../../styles/variables.scss" as *;
+
 .footer {
   display: flex;
-  width: 100%;
   min-height: 90px;
   height: 90px;
   background-color: var(--gray);
+  padding: 0px 30px;
 
   &_content {
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    width: 1180px;
-    padding: 0px 130px;
+    width: 100%;
+    max-width: 1180px;
     height: 44px;
     margin: auto;
   }
@@ -38,6 +40,29 @@
       height: 20px;
       text-decoration: none;
       color: var(--white);
+    }
+  }
+}
+
+@media (max-width: $lg) {
+  .footer {
+    padding: 0px 20px;
+  }
+}
+
+@media (max-width: $md) {
+  .footer {
+    padding: 0px 16px;
+
+    &_content {
+      flex-direction: column;
+      gap: 5px;
+      height: auto;
+    }
+
+    &_navigation {
+      justify-content: center;
+      width: 100%;
     }
   }
 }

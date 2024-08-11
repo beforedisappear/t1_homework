@@ -1,29 +1,43 @@
+@use "../../styles/variables.scss" as *;
+
 .catalog {
   display: flex;
   flex-direction: column;
   row-gap: 48px;
-  width: 1180px;
   margin: 0 auto;
   padding: 50px 0px;
+  width: 100%;
+  max-width: 1180px;
 
   > h1 {
     color: var(--gray);
     font-weight: 700;
     font-size: 36px;
+    margin: 0px;
+    padding: 0px 30px;
   }
+}
 
-  > button {
-    width: 177px;
-    height: 62px;
-    padding: 10px;
-    margin: 0 auto;
+@media (max-width: $lg) {
+  .catalog {
+    padding: 30px 0px;
+    row-gap: 30px;
 
-    font-size: 16px;
-    line-height: 22px;
-    font-weight: 400;
+    > h1 {
+      font-size: 28px;
+      padding: 0px 20px;
+    }
+  }
+}
 
-    &::first-letter {
-      text-transform: uppercase;
+@media (max-width: $md) {
+  .catalog {
+    padding: 15px 0px;
+    row-gap: 20px;
+
+    > h1 {
+      font-size: 22px;
+      padding: 0px 16px;
     }
   }
 }

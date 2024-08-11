@@ -1,9 +1,21 @@
 import styles from "./header.module.scss";
+import cn from "clsx";
 import Cart from "@/assets/icons/common/cart.svg?svgr";
+import { useState, useRef } from "react";
 
 import { Link } from "react-router-dom";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 export function Header() {
+  const ref = useRef<HTMLDivElement | null>(null);
+  const [showNavigation, setShowNavigation] = useState(false);
+
+  const onShowNavigation = () => {
+    setShowNavigation((showNavigation) => !showNavigation);
+  };
+
+  useOutsideClick(ref, () => setShowNavigation);
+
   return (
     <header className={styles.header}>
       <div className={styles.header_content}>
@@ -11,27 +23,58 @@ export function Header() {
           Good4you
         </Link>
 
-        <nav className={styles.header_navigation}>
-          <Link to="/" state={{ to: "catalog" }} className={styles.header_link}>
-            <span>Catalog</span>
-          </Link>
+        <nav className={cn(styles.header_navigation)}>
+          <button
+            onClick={onShowNavigation}
+            className={cn(styles.header_nav_menu_btn, "primary_btn")}
+          >
+            Menu
+          </button>
 
-          <Link to="/" state={{ to: "faq" }} className={styles.header_link}>
-            <span>FAQ</span>
-          </Link>
+          <div
+            className={cn(styles.header_nav_menu_block, {
+              [styles.showed]: showNavigation,
+            })}
+          >
+            <Link
+              to="/"
+              state={{ to: "catalog" }}
+              className={styles.header_link}
+              onClick={() => setShowNavigation(false)}
+            >
+              <span>Catalog</span>
+            </Link>
 
-          <Link to="/cart" className={styles.header_link}>
-            <span>Cart</span>
+            <Link
+              to="/"
+              state={{ to: "faq" }}
+              className={styles.header_link}
+              onClick={() => setShowNavigation(false)}
+            >
+              <span>FAQ</span>
+            </Link>
 
-            <div className={styles.header_link_icon}>
-              <Cart />
-              <div>1</div>
-            </div>
-          </Link>
+            <Link
+              to="/cart"
+              className={styles.header_link}
+              onClick={() => setShowNavigation(false)}
+            >
+              <span>Cart</span>
 
-          <Link to="/" className={styles.header_link}>
-            <span>Johnson Smith</span>
-          </Link>
+              <div className={styles.header_link_icon}>
+                <Cart />
+                <div>1</div>
+              </div>
+            </Link>
+
+            <Link
+              to="/"
+              className={styles.header_link}
+              onClick={() => setShowNavigation(false)}
+            >
+              <span>Johnson Smith</span>
+            </Link>
+          </div>
         </nav>
       </div>
     </header>

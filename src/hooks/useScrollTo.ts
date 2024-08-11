@@ -14,7 +14,7 @@ export function useScrollTo({ ref }: IProps) {
       if (ref.current?.id === state.to) {
         window.scrollTo({ top: ref.current?.offsetTop });
         //clear state
-        navigate(pathname, { state: {} });
+        navigate(pathname, { state: {}, preventScrollReset: true });
       }
     }
   }, [state]);

@@ -1,3 +1,5 @@
+@use "../../styles/variables.scss" as *;
+
 .product_card_list {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -5,4 +7,51 @@
   justify-content: space-between;
   row-gap: 20px;
   column-gap: 35px;
+  padding: 0px 30px;
+
+  + button {
+    width: 177px;
+    height: 62px;
+    padding: 10px;
+    margin: 0 auto;
+
+    font-size: 16px;
+    line-height: 22px;
+    font-weight: 400;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
+  }
 }
+
+@media (max-width: $lg) {
+  .product_card_list {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 0px 20px;
+
+    + button {
+      width: 130px;
+      height: 52px;
+      padding: 10px;
+
+      font-size: 14px;
+    }
+  }
+}
+
+@media (max-width: $md) {
+  .product_card_list {
+    column-gap: 15px;
+    padding: 0px 16px;
+
+    + button {
+      width: 110px;
+      height: 42px;
+      padding: 10px;
+
+      font-size: 12px;
+    }
+  }
+}
+

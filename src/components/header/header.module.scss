@@ -1,15 +1,18 @@
+@use "../../styles/variables.scss" as *;
+
 .header {
   display: flex;
-  width: 100%;
   min-height: 90px;
   height: 90px;
+  padding: 0px 30px;
   background-color: var(--purple);
 
   &_content {
     display: inline-flex;
     align-items: center;
     justify-content: space-between;
-    width: 1180px;
+    max-width: 1180px;
+    width: 100%;
     height: 44px;
     margin: auto;
   }
@@ -25,11 +28,21 @@
   }
 
   &_navigation {
-    display: flex;
-    justify-content: space-between;
     width: 340px;
-    height: 20px;
-    gap: 40px;
+    height: auto;
+  }
+
+  &_nav_menu {
+    &_block {
+      display: flex;
+      justify-content: space-between;
+      width: 100%;
+      gap: 40px;
+    }
+
+    &_btn {
+      display: none;
+    }
   }
 
   &_link {
@@ -58,6 +71,60 @@
         font-weight: 400;
         font-size: 8px;
         line-height: 8px;
+      }
+    }
+  }
+}
+
+@media (max-width: $lg) {
+  .header {
+    padding: 0px 20px;
+  }
+}
+
+@media (max-width: $md) {
+  .header {
+    padding: 0px 16px;
+
+    &_navigation {
+      width: auto;
+      position: relative;
+    }
+
+    &_link {
+      color: var(--black);
+      justify-content: center;
+
+      &_icon {
+        > svg path {
+          fill: var(--black);
+        }
+      }
+    }
+
+    &_nav_menu {
+      &_btn {
+        display: block;
+        height: 25px;
+        padding: 7px;
+      }
+
+      &_block {
+        position: absolute;
+        top: calc(100% + 10px);
+        right: 0%;
+        z-index: 99;
+        display: none;
+        flex-direction: column;
+        width: 100px;
+        height: auto;
+        gap: 7px;
+        background: white;
+        border-radius: 5px;
+
+        &.showed {
+          display: flex;
+        }
       }
     }
   }
