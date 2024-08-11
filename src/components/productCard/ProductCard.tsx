@@ -1,8 +1,8 @@
 import styles from "./productCard.module.scss";
 import image from "@/assets/images/productCard/image.jpg";
 import Cart from "@/assets/icons/common/cart.svg?svgr";
-import Plus from "@/assets/icons/productCard/plus.svg?svgr";
-import Minus from "@/assets/icons/productCard/minus.svg?svgr";
+import Plus from "@/assets/icons/common/plus.svg?svgr";
+import Minus from "@/assets/icons/common/minus.svg?svgr";
 
 import { Link } from "react-router-dom";
 import { useState } from "react";

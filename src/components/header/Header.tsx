@@ -62,7 +62,7 @@ export function Header() {
               <span>Cart</span>
 
               <div className={styles.header_link_icon}>
-                <Cart />
+                <Cart aria-hidden />
                 <div>1</div>
               </div>
             </Link>

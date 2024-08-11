@@ -45,6 +45,10 @@
       &:hover {
         background: rgba($color: #878787, $alpha: 0.25);
 
+        .product_card_info_title {
+          text-decoration: unset;
+        }
+
         &::after {
           content: "Show details";
         }

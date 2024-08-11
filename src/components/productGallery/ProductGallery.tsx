@@ -4,7 +4,7 @@ import sneakersImg from "@/assets/images/productGallery/sneakers.jpg";
 
 export function ProductGallery() {
   return (
-    <div className={styles.product_gallery}>
+    <section className={styles.product_gallery}>
       <div className={styles.product_gallery_main_photo}>
         <img
           src={sneakersImg}
@@ -30,6 +30,6 @@ export function ProductGallery() {
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }

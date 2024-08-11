@@ -4,11 +4,11 @@ import { ProductInfo } from "@/components/productInfo/ProductInfo";
 
 export function ProductDetails() {
   return (
-    <div className={styles.product_details}>
+    <article className={styles.product_details}>
       <div className={styles.product_details_content}>
         <ProductGallery />
         <ProductInfo />
       </div>
-    </div>
+    </article>
   );
 }

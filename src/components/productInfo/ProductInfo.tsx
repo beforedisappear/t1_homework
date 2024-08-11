@@ -3,7 +3,7 @@ import Star from "@/assets/icons/productInfo/star.svg?svgr";
 
 export function ProductInfo() {
   return (
-    <div className={styles.product_info}>
+    <section className={styles.product_info}>
       <div className={styles.product_info_common}>
         <h1>Essence Mascara Lash Princess</h1>
 
@@ -52,6 +52,6 @@ export function ProductInfo() {
 
         <button className="primary_btn">Add to cart</button>
       </div>
-    </div>
+    </section>
   );
 }
