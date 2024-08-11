@@ -6,7 +6,12 @@ export function ProductGallery() {
   return (
     <div className={styles.product_gallery}>
       <div className={styles.product_gallery_main_photo}>
-        <img src={sneakersImg} />
+        <img
+          src={sneakersImg}
+          height={520}
+          width={520}
+          alt={`product main image`}
+        />
       </div>
       <div className={styles.product_gallery_carousel}>
         {new Array(6).fill("_").map((_, i) => (
@@ -16,7 +21,12 @@ export function ProductGallery() {
               [styles.active]: i === 0,
             })}
           >
-            <img src={sneakersImg} alt={`product image ${i}`} />
+            <img
+              src={sneakersImg}
+              height={70}
+              width={70}
+              alt={`product image ${i}`}
+            />
           </div>
         ))}
       </div>
