@@ -27,7 +27,7 @@ export function Faq() {
 
         <ul className={styles.faq_list}>
           {faqData.map((el, i) => (
-            <li>
+            <li key={el.title}>
               <button
                 key={`faq_list_${i}`}
                 className={cn(styles.faq_list_item, {

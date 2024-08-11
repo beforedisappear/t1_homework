@@ -24,7 +24,11 @@ export function ProductCard({ index }: IProps) {
       </div>
       <div className={styles.product_card_content}>
         <div className={styles.product_card_info}>
-          <Link to={url} className={styles.product_card_info_title}>
+          <Link
+            to={url}
+            className={styles.product_card_info_title}
+            preventScrollReset={false}
+          >
             Essence Mascara Lash Princess
           </Link>
           <span className={styles.product_card_info_price}>$110</span>

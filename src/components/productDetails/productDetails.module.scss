@@ -1,0 +1,14 @@
+@use "../../styles/variables.scss" as *;
+
+.product_details {
+  display: flex;
+  margin: 48px auto 114px;
+  padding: 0px 30px;
+
+  &_content {
+    display: flex;
+    width: 100%;
+    column-gap: 30px;
+    max-width: 1180px;
+  }
+}

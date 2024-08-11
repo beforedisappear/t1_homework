@@ -5,6 +5,8 @@
   background-color: var(--red);
   color: var(--white);
   font-family: "Jost", sans-serif;
+  font-weight: 400;
+  font-size: 16px;
 
   @media (hover: hover) {
     &:hover {

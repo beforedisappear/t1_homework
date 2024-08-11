@@ -1,20 +1,20 @@
 import styles from "./header.module.scss";
 import cn from "clsx";
 import Cart from "@/assets/icons/common/cart.svg?svgr";
-import { useState, useRef } from "react";
+import { useState } from "react";
 
 import { Link } from "react-router-dom";
-import { useOutsideClick } from "@/hooks/useOutsideClick";
+// import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 export function Header() {
-  const ref = useRef<HTMLDivElement | null>(null);
+  // const ref = useRef<HTMLDivElement | null>(null);
   const [showNavigation, setShowNavigation] = useState(false);
 
   const onShowNavigation = () => {
     setShowNavigation((showNavigation) => !showNavigation);
   };
 
-  useOutsideClick(ref, () => setShowNavigation);
+  // useOutsideClick(ref, () => setShowNavigation);
 
   return (
     <header className={styles.header}>
@@ -68,7 +68,7 @@ export function Header() {
             </Link>
 
             <Link
-              to="/"
+              to="#"
               className={styles.header_link}
               onClick={() => setShowNavigation(false)}
             >

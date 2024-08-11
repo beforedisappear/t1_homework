@@ -1,10 +1,10 @@
 import { ProductDetails } from "@/components/productDetails/ProductDetails";
 import { Helmet } from "react-helmet-async";
 
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 
 export function ProductByIdPage() {
-  const { id } = useParams<{ id: string }>();
+  // const { id } = useParams<{ id: string }>();
 
   return (
     <>
@@ -12,7 +12,6 @@ export function ProductByIdPage() {
         <title> Essence Mascara Lash Princess | Goods4you</title>
       </Helmet>
       <ProductDetails />
-      {`product by ${id} page`}
     </>
   );
 }
