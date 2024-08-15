@@ -8,7 +8,7 @@ export function ProductGallery() {
       className={styles.product_gallery}
       aria-label={"product card images slider"}
     >
-      <div className={styles.product_gallery_main_photo}>
+      <div className={styles.product_gallery_main_photo} tabIndex={0}>
         <img
           src={sneakersImg}
           height={520}
@@ -24,6 +24,7 @@ export function ProductGallery() {
               [styles.active]: i === 0,
             })}
             aria-label={`product image №${i + 1}`}
+            tabIndex={0}
           >
             <img
               src={sneakersImg}

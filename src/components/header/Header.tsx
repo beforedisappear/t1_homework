@@ -1,30 +1,31 @@
 import styles from "./header.module.scss";
 import cn from "clsx";
 import Cart from "@/assets/icons/common/cart.svg?svgr";
-import { useState } from "react";
 
+import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
-// import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 export function Header() {
-  // const ref = useRef<HTMLDivElement | null>(null);
+  const ref = useRef<HTMLDivElement | null>(null);
   const [showNavigation, setShowNavigation] = useState(false);
 
   const onShowNavigation = () => {
     setShowNavigation((showNavigation) => !showNavigation);
   };
 
-  // useOutsideClick(ref, () => setShowNavigation);
+  useOutsideClick(ref, () => setShowNavigation(false));
 
   return (
     <header className={styles.header}>
       <div className={styles.header_content}>
-        <Link to="/" className={styles.header_logo}>
+        <Link aria-label="site logo" to="/" className={styles.header_logo}>
           Good4you
         </Link>
 
-        <nav className={cn(styles.header_navigation)}>
+        <nav ref={ref} className={cn(styles.header_navigation)}>
           <button
+            aria-label="navigation menu button"
             onClick={onShowNavigation}
             className={cn(styles.header_nav_menu_btn, "primary_btn")}
           >
@@ -39,8 +40,8 @@ export function Header() {
             <Link
               to="/"
               state={{ to: "catalog" }}
+              aria-label="catalog"
               className={styles.header_link}
-              onClick={() => setShowNavigation(false)}
             >
               <span>Catalog</span>
             </Link>
@@ -48,17 +49,13 @@ export function Header() {
             <Link
               to="/"
               state={{ to: "faq" }}
+              aria-label="faq"
               className={styles.header_link}
-              onClick={() => setShowNavigation(false)}
             >
               <span>FAQ</span>
             </Link>
 
-            <Link
-              to="/cart"
-              className={styles.header_link}
-              onClick={() => setShowNavigation(false)}
-            >
+            <Link to="/cart" aria-label="cart" className={styles.header_link}>
               <span>Cart</span>
 
               <div className={styles.header_link_icon}>
@@ -67,11 +64,7 @@ export function Header() {
               </div>
             </Link>
 
-            <Link
-              to="#"
-              className={styles.header_link}
-              onClick={() => setShowNavigation(false)}
-            >
+            <Link to="#" aria-label="profile" className={styles.header_link}>
               <span>Johnson Smith</span>
             </Link>
           </div>

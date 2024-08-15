@@ -20,7 +20,12 @@ export function ProductCard({ index }: IProps) {
     <li aria-label={`product card № ${index}`} className={styles.product_card}>
       <div className={styles.product_card_img}>
         <Link to={url}></Link>
-        <img src={image} alt={`product card №${index}`} />
+        <img
+          src={image}
+          decoding="async"
+          loading="lazy"
+          alt={`product card №${index}`}
+        />
       </div>
       <div className={styles.product_card_content}>
         <div className={styles.product_card_info}>

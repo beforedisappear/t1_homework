@@ -143,6 +143,8 @@
     }
 
     &_nav {
+      justify-content: flex-end;
+
       > button {
         padding: 5px;
         min-width: 30px;

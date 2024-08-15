@@ -36,6 +36,7 @@ export function CartFormItem({ index }: { index: number }) {
           <>
             <div className={styles.cart_form_item_control_btns}>
               <button
+                aria-label={`delete one more product`}
                 className={cn(styles.cart_form_item_control_btn, "primary_btn")}
                 onClick={() =>
                   setCounterValue((counterValue) => counterValue - 1)
@@ -44,11 +45,12 @@ export function CartFormItem({ index }: { index: number }) {
                 <Minus />
               </button>
 
-              <span>{`${counterValue} item${
-                counterValue > 1 ? "s" : ""
-              }`}</span>
+              <span>
+                {`${counterValue} item${counterValue > 1 ? "s" : ""}`}
+              </span>
 
               <button
+                aria-label={`add one more product`}
                 className={cn(styles.cart_form_item_control_btn, "primary_btn")}
                 onClick={() =>
                   setCounterValue((counterValue) => counterValue + 1)
@@ -58,12 +60,17 @@ export function CartFormItem({ index }: { index: number }) {
               </button>
             </div>
 
-            <button id={styles.delete_btn} onClick={() => setCounterValue(0)}>
+            <button
+              id={styles.delete_btn}
+              aria-label={`delete product from cart`}
+              onClick={() => setCounterValue(0)}
+            >
               Delete
             </button>
           </>
         ) : (
           <button
+            aria-label={`add  one product to cart`}
             className={cn(styles.cart_form_item_control_btn, "primary_btn")}
             onClick={() => setCounterValue((counterValue) => counterValue + 1)}
           >
