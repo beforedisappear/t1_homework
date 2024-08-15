@@ -1,10 +1,19 @@
 import { useDispatch, useSelector, useStore } from "react-redux";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
+import dataApi from "@/api/dataApi";
+import cartFormSlice from "@/components/cartForm/cartFormSlice";
+
 import type { Store, Action } from "@reduxjs/toolkit";
 import type { TypedUseSelectorHook } from "react-redux";
 
-const rootReducer = combineReducers({});
+const rootReducer = combineReducers({
+  //apis
+  [dataApi.reducerPath]: dataApi.reducer,
+
+  //slices
+  cartFormSlice,
+});
 
 // redux store creation
 export const store = configureStore({
@@ -12,7 +21,7 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     //middleware connection for the work of RTK query
-    getDefaultMiddleware({}).concat([]),
+    getDefaultMiddleware({}).concat([dataApi.middleware]),
   devTools: import.meta.env.DEV,
 });
 

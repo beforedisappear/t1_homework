@@ -60,7 +60,9 @@ export function Header() {
 
               <div className={styles.header_link_icon}>
                 <Cart aria-hidden />
-                <div>1</div>
+                {isSuccess && data.carts.length > 0 && (
+                  <div>{data.carts[0].totalQuantity}</div>
+                )}
               </div>
             </Link>
 
