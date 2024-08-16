@@ -1,21 +1,29 @@
 import styles from "./productCardList.module.scss";
 
 import { ProductCardListFallback } from "./ProductCardList.fallback";
+import { ProductCardListPlaceholder } from "./ProductCardList.placeholder";
 import { ProductCard } from "@/components/productCard/ProductCard";
 
+import { setPage } from "./productCardListSlice";
+
 import dataApi, { useGetProductListQuery } from "@/api/dataApi";
-import { useState } from "react";
+import { useAppDispatch, useAppSelector } from "@/store";
 
 export function ProductCardList() {
-  const [page, setPage] = useState(0);
+  const dispatch = useAppDispatch();
+  const page = useAppSelector((state) => state.productCardListSlice.page);
+  const searchValue = useAppSelector(
+    (state) => state.searchBarSlice.searchValue
+  );
 
   const {
+    originalArgs,
     data: productCardList,
     isLoading,
     isFetching,
     isError,
   } = useGetProductListQuery({
-    q: "",
+    q: searchValue,
     page,
   });
 
@@ -25,7 +33,8 @@ export function ProductCardList() {
       id: "6",
     });
 
-  if (isLoading) return <ProductCardListFallback />;
+  if (isLoading || (isFetching && originalArgs?.page === 0))
+    return <ProductCardListFallback />;
   else if (isError || !productCardList) return <h2>ошибка</h2>;
 
   //condition not to display "show more" button
@@ -58,13 +67,17 @@ export function ProductCardList() {
         {isFetching && (
           <ProductCardListFallback count={6} withContainer={false} />
         )}
+
+        {productCardList.products.length === 0 && (
+          <ProductCardListPlaceholder />
+        )}
       </ul>
 
       {!isFetching && isNoProducts && (
         <button
           aria-label="load more product cards"
           className="primary_btn"
-          onClick={() => setPage((page) => page + 1)}
+          onClick={() => dispatch(setPage(page + 1))}
         >
           show more
         </button>

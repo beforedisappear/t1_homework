@@ -3,6 +3,8 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import dataApi from "@/api/dataApi";
 import cartFormSlice from "@/components/cartForm/cartFormSlice";
+import searchBarSlice from "@/components/searchBar/searchBarSlice";
+import productCardListSlice from "@/components/productCardList/productCardListSlice";
 
 import type { Store, Action } from "@reduxjs/toolkit";
 import type { TypedUseSelectorHook } from "react-redux";
@@ -13,6 +15,8 @@ const rootReducer = combineReducers({
 
   //slices
   cartFormSlice,
+  searchBarSlice,
+  productCardListSlice,
 });
 
 // redux store creation
