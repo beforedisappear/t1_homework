@@ -1,4 +1,5 @@
 @use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
 
 .cart_details {
   display: flex;
@@ -6,13 +7,28 @@
   row-gap: 48px;
   padding: 0px 30px;
 
-  > h1 {
+  &_title {
     color: var(--gray);
     font-weight: 700;
     font-size: 36px;
+    line-height: 56px;
     width: 100%;
     max-width: 1180px;
     margin: 48px auto 0px;
+
+    &.loading {
+      border-radius: 10px;
+      color: transparent;
+      height: 56px;
+
+      > span {
+        display: flex;
+        height: 100%;
+        width: 300px;
+        border-radius: 5px;
+        @include skeleton();
+      }
+    }
   }
 
   &_content {
@@ -20,7 +36,19 @@
     width: 100%;
     max-width: 1180px;
     column-gap: 48px;
-    margin: 0px auto 0px;
+    margin: 0px auto 45px;
+  }
+
+  .no_items {
+    color: #b2b5bb;
+    font-weight: 600;
+    font-size: 24px;
+    line-height: 36px;
+    margin: 0 auto;
+
+    &::first-letter {
+      text-transform: uppercase;
+    }
   }
 }
 
@@ -39,8 +67,13 @@
     padding: 0px 16px;
     row-gap: 20px;
 
-    > h1 {
+    &_title {
       margin-top: 20px;
+      line-height: 40px;
+
+      &.loading > span {
+        height: 40px;
+      }
     }
 
     &_content {

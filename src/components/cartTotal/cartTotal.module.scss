@@ -1,10 +1,16 @@
 @use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
 
 .cart_total {
   display: flex;
   flex-direction: column;
   width: 356px;
   row-gap: 10px;
+
+  &.loading {
+    min-height: 200px;
+    @include skeleton();
+  }
 
   &_common {
     display: flex;

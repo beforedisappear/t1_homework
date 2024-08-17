@@ -30,7 +30,7 @@ export function CartFormItem({ index, data }: CartFormItemProps) {
         <img src={data.thumbnail} alt={"sneakers item №4"} />
         <div className={styles.cart_form_item_info_text}>
           <Link
-            to={`/product/${index}`}
+            to={`/product/${data.id}`}
             className={styles.cart_form_item_info_title}
           >
             {data.title}
@@ -40,6 +40,7 @@ export function CartFormItem({ index, data }: CartFormItemProps) {
           </span>
         </div>
       </div>
+
       <div className={styles.cart_form_item_control}>
         {counterValue > 0 ? (
           <>

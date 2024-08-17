@@ -2,7 +2,7 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import dataApi from "@/api/dataApi";
-import cartFormSlice from "@/components/cartForm/cartFormSlice";
+import cartDetailsSlice from "@/components/cartDetails/cartDetailsSlice";
 import searchBarSlice from "@/components/searchBar/searchBarSlice";
 import productCardListSlice from "@/components/productCardList/productCardListSlice";
 
@@ -14,9 +14,9 @@ const rootReducer = combineReducers({
   [dataApi.reducerPath]: dataApi.reducer,
 
   //slices
-  cartFormSlice,
   searchBarSlice,
   productCardListSlice,
+  cartDetailsSlice,
 });
 
 // redux store creation
