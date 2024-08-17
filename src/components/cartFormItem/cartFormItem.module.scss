@@ -8,16 +8,16 @@
   column-gap: 24px;
   padding: 12px;
 
-  &.deleted {
-    .cart_form_item_info {
-      opacity: 0.6;
-    }
-  }
-
   @media (hover: hover) {
     &:hover {
       background: #f6f6f6;
       cursor: pointer;
+    }
+  }
+
+  &.deleted {
+    .cart_form_item_info {
+      opacity: 0.6;
     }
   }
 
@@ -46,6 +46,12 @@
       line-height: 22px;
       color: #444b58;
       text-decoration: none;
+
+      @media (hover: hover) {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
     &_price {
@@ -94,6 +100,13 @@
       font-weight: 400;
       line-height: 20px;
       cursor: pointer;
+
+      @media (hover: hover) {
+        &:hover {
+          color: #444b58;
+          text-decoration: underline;
+        }
+      }
     }
   }
 }

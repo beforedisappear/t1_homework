@@ -1,6 +1,6 @@
 import styles from "./cartForm.module.scss";
 
-import { CartFormItem } from "../cardFormItem/CartFormItem";
+import { CartFormItem } from "../cartFormItem/CartFormItem";
 
 import { ICart } from "@/types";
 

@@ -3,7 +3,7 @@ import styles from "./catalog.module.scss";
 import { SearchBar } from "@/components/searchBar/SearchBar";
 import { ProductCardList } from "@/components/productCardList/ProductCardList";
 
-import { useScrollTo } from "@/hooks/useScrollTo";
+import { useScrollTo } from "@/io/hooks/useScrollTo";
 import { useRef } from "react";
 
 export function Catalog() {
