@@ -67,3 +67,9 @@ export interface IProductListRequest {
   limit?: number;
   page: number;
 }
+
+export interface IProductRequest {
+  id: string;
+}
+
+export type ProductResponse = IProduct;

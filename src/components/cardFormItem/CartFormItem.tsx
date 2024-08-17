@@ -1,6 +1,5 @@
 import styles from "./cartFormItem.module.scss";
 import cn from "clsx";
-import sneakersImg from "@/assets/images/productCard/image.jpg";
 import Cart from "@/assets/icons/common/cart.svg?svgr";
 import Plus from "@/assets/icons/common/plus.svg?svgr";
 import Minus from "@/assets/icons/common/minus.svg?svgr";
@@ -9,8 +8,16 @@ import { useState } from "react";
 
 import { Link } from "react-router-dom";
 
-export function CartFormItem({ index }: { index: number }) {
-  const [counterValue, setCounterValue] = useState(1);
+import type { IShortProduct } from "@/types";
+import { getFinalPrice } from "@/utils";
+
+interface CartFormItemProps {
+  index: number;
+  data: IShortProduct;
+}
+
+export function CartFormItem({ index, data }: CartFormItemProps) {
+  const [counterValue, setCounterValue] = useState(data.quantity);
 
   return (
     <div
@@ -20,15 +27,17 @@ export function CartFormItem({ index }: { index: number }) {
       aria-label={`product card №${index + 1} in cart`}
     >
       <div className={styles.cart_form_item_info}>
-        <img src={sneakersImg} alt={"sneakers item №4"} />
+        <img src={data.thumbnail} alt={"sneakers item №4"} />
         <div className={styles.cart_form_item_info_text}>
           <Link
             to={`/product/${index}`}
             className={styles.cart_form_item_info_title}
           >
-            Essence Mascara Lash Princess
+            {data.title}
           </Link>
-          <span className={styles.cart_form_item_info_price}>$110</span>
+          <span className={styles.cart_form_item_info_price}>
+            {`$${getFinalPrice(data.price, data.discountPercentage)}`}
+          </span>
         </div>
       </div>
       <div className={styles.cart_form_item_control}>

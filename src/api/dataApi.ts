@@ -5,6 +5,8 @@ import type {
   ICartResponse,
   IProductListRequest,
   IProductListResponse,
+  IProductRequest,
+  ProductResponse,
 } from "@/types";
 
 const dataApi = createApi({
@@ -24,6 +26,7 @@ const dataApi = createApi({
         return endpointName;
       },
 
+      //реализация без использования entity adapter
       merge(currentCacheData, responseData) {
         //обнуляем кэш если выборка данных первая
         if (responseData.skip === 0) {
@@ -40,9 +43,17 @@ const dataApi = createApi({
         return currentArg !== previousArg;
       },
     }),
+
+    getProductById: builder.query<ProductResponse, IProductRequest>({
+      query: ({ id }) => `/products/${id}`,
+    }),
   }),
 });
 
-export const { useGetUserCartQuery, useGetProductListQuery } = dataApi;
+export const {
+  useGetUserCartQuery,
+  useGetProductListQuery,
+  useGetProductByIdQuery,
+} = dataApi;
 
 export default dataApi;
