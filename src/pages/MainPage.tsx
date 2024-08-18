@@ -8,6 +8,10 @@ export function MainPage() {
     <>
       <Helmet>
         <title>Catalog | Goods4you</title>
+        <meta
+          name="description"
+          content="Any products from famous brands with worldwide delivery"
+        />
       </Helmet>
       <Hero />
       <Catalog />

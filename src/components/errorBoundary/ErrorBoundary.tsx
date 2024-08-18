@@ -2,7 +2,7 @@ interface IProps {
   message?: string;
 }
 
-export function ErrorBoundary({ message = "Непредвиденна ошибка" }: IProps) {
+export function ErrorBoundary({ message = "Unexpected error" }: IProps) {
   return (
     <article
       style={{

@@ -5,7 +5,7 @@ import Cross from "@/assets/icons/faq/cross.svg?svgr";
 
 import { faqData } from "./faq.data";
 
-import { useScrollTo } from "@/io/hooks/useScrollTo";
+import { useScrollTo } from "@/hooks/useScrollTo";
 import { useRef, useState } from "react";
 
 export function Faq() {

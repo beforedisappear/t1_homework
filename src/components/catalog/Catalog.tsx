@@ -3,7 +3,7 @@ import styles from "./catalog.module.scss";
 import { SearchBar } from "@/components/searchBar/SearchBar";
 import { ProductCardList } from "@/components/productCardList/ProductCardList";
 
-import { useScrollTo } from "@/io/hooks/useScrollTo";
+import { useScrollTo } from "@/hooks/useScrollTo";
 import { useRef } from "react";
 
 export function Catalog() {
@@ -13,7 +13,7 @@ export function Catalog() {
 
   return (
     <section id="catalog" ref={ref} className={styles.catalog}>
-      <h1>Catalog</h1>
+      <h2>Catalog</h2>
 
       <SearchBar />
 

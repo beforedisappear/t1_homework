@@ -28,7 +28,7 @@ export function ProductByIdPage() {
   if (isProductByIdLoading || isCartLoading) return <ProductDetailsFallback />;
   else if (isError || !data) {
     if (error && "status" in error) {
-      return <ErrorBoundary message="404 | Страница не существует" />;
+      return <ErrorBoundary message="404 | Page not found" />;
     }
 
     return <ErrorBoundary />;
@@ -38,6 +38,10 @@ export function ProductByIdPage() {
     <>
       <Helmet>
         <title>{`${data.title} | Goods4you`}</title>
+        <meta
+          name="description"
+          content="Any products from famous brands with worldwide delivery"
+        />
       </Helmet>
 
       <ProductDetails

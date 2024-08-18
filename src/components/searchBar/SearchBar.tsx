@@ -3,7 +3,7 @@ import cn from "clsx";
 
 import { useAppDispatch } from "@/store";
 import { useState } from "react";
-import { useDebounce } from "@/io/hooks/useDebounce";
+import { useDebounce } from "@/hooks/useDebounce";
 
 import { setSearchValue } from "./searchBarSlice";
 import { setPage } from "../productCardList/productCardListSlice";
