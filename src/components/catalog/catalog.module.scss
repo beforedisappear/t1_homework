@@ -1,0 +1,42 @@
+@use "../../styles/variables.scss" as *;
+
+.catalog {
+  display: flex;
+  flex-direction: column;
+  row-gap: 48px;
+  margin: 0 auto;
+  width: calc(100% - 60px);
+  max-width: 1180px;
+  padding: 50px 30px;
+
+  > h1 {
+    color: var(--gray);
+    font-weight: 700;
+    font-size: 36px;
+    margin: 0px;
+  }
+}
+
+@media (max-width: $lg) {
+  .catalog {
+    width: calc(100% - 40px);
+    padding: 30px 20px;
+    row-gap: 30px;
+
+    > h1 {
+      font-size: 28px;
+    }
+  }
+}
+
+@media (max-width: $md) {
+  .catalog {
+    width: calc(100% - 36px);
+    padding: 15px 16px;
+    row-gap: 20px;
+
+    > h1 {
+      font-size: 22px;
+    }
+  }
+}

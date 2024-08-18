@@ -1,0 +1,32 @@
+@use "../../styles/variables.scss" as *;
+
+.product_details {
+  display: flex;
+  margin: 48px auto 114px;
+  padding: 0px 30px;
+
+  &_content {
+    display: flex;
+    width: 100%;
+    max-width: 1180px;
+    column-gap: 30px;
+  }
+}
+
+@media (max-width: $lg) {
+  .product_details {
+    padding: 0px 20px;
+
+    &_content {
+      align-items: center;
+      flex-direction: column;
+      row-gap: 15px;
+    }
+  }
+}
+
+@media (max-width: $md) {
+  .product_details {
+    padding: 0px 16px;
+  }
+}

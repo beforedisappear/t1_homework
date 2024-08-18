@@ -1,0 +1,51 @@
+@use "../../styles/variables.scss" as *;
+
+.cart_details {
+  display: flex;
+  flex-direction: column;
+  row-gap: 48px;
+  padding: 0px 30px;
+
+  > h1 {
+    color: var(--gray);
+    font-weight: 700;
+    font-size: 36px;
+    width: 100%;
+    max-width: 1180px;
+    margin: 48px auto 0px;
+  }
+
+  &_content {
+    display: flex;
+    width: 100%;
+    max-width: 1180px;
+    column-gap: 48px;
+    margin: 0px auto 0px;
+  }
+}
+
+@media (max-width: $xxl) {
+  .cart_details {
+    padding: 0px 20px;
+
+    &_content {
+      column-gap: 20px;
+    }
+  }
+}
+
+@media (max-width: $lg) {
+  .cart_details {
+    padding: 0px 16px;
+    row-gap: 20px;
+
+    > h1 {
+      margin-top: 20px;
+    }
+
+    &_content {
+      row-gap: 20px;
+      flex-direction: column;
+    }
+  }
+}

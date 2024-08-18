@@ -1,0 +1,78 @@
+@use "../../styles/variables.scss" as *;
+
+.cart_total {
+  display: flex;
+  flex-direction: column;
+  width: 356px;
+  row-gap: 10px;
+
+  &_common {
+    display: flex;
+    flex-direction: column;
+    row-gap: 10px;
+
+    &_count {
+      display: inline-flex;
+      justify-content: space-between;
+
+      > span {
+        line-height: 30px;
+        font-size: 20px;
+        font-weight: 400;
+
+        &:first-child {
+          color: #b2b5bb;
+        }
+
+        &:last-child {
+          color: #444b58;
+        }
+      }
+    }
+
+    &_price_wo_discount {
+      display: inline-flex;
+      justify-content: space-between;
+      padding-bottom: 20px;
+
+      > span {
+        font-size: 20px;
+        line-height: 30px;
+
+        &:first-child {
+          font-weight: 600;
+          color: #b2b5bb;
+        }
+
+        &:last-child {
+          color: #444b58;
+          font-weight: 700;
+        }
+      }
+    }
+  }
+
+  &_price {
+    display: inline-flex;
+    justify-content: space-between;
+
+    > span {
+      line-height: 36px;
+      font-size: 24px;
+
+      &:first-child {
+        font-weight: 600;
+        color: #b2b5bb;
+      }
+
+      &:last-child {
+        color: #444b58;
+        font-weight: 700;
+      }
+    }
+  }
+
+  @media (max-width: $md) {
+    width: 100%;
+  }
+}

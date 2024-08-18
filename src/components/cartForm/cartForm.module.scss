@@ -1,0 +1,22 @@
+@use "../../styles/variables.scss" as *;
+
+.cart_form {
+  display: flex;
+  flex-direction: column;
+  padding: 20px 40px;
+  border: 1px solid #c4c4c4;
+  width: calc(776px - 80px);
+  row-gap: 10px;
+  max-width: 776px;
+  border-radius: 4px;
+
+  @media (max-width: $lg) {
+    width: 100%;
+    max-width: calc(100% - 80px);
+  }
+
+  @media (max-width: $md) {
+    padding: 10px;
+    max-width: calc(100% - 20px);
+  }
+}
