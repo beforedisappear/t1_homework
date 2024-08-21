@@ -20,9 +20,20 @@ const initialState: InitialState = {
 
 export const fetchProductsInCartByUserId = createAsyncThunk(
   "cartForm/fetchProductsInCartByUserId",
-  async (id: string) => {
-    const response = await fetch(`https://dummyjson.com/carts/user/${id}`);
-    return response.json();
+  async (id: string, { rejectWithValue }) => {
+    try {
+      const response = await fetch(`https://dummyjson.com/carts/user/${id}`);
+      if (!response.ok) {
+        // If the response is not ok, throw an error
+        throw new Error("Network response was not ok");
+      }
+      const data = await response.json();
+
+      return data;
+    } catch (error) {
+      // Use rejectWithValue to return a custom error message
+      return rejectWithValue(JSON.stringify(error));
+    }
   }
 );
 
