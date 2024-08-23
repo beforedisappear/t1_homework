@@ -8,6 +8,7 @@
   width: calc(100% - 60px);
   max-width: 1180px;
   padding: 50px 30px;
+  box-sizing: unset;
 
   > h2 {
     color: var(--gray);

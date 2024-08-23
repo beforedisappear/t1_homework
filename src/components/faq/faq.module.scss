@@ -38,15 +38,16 @@
       display: flex;
       flex-direction: column;
       align-items: unset;
-      height: 80px;
+      height: auto;
+      max-height: 80px;
       cursor: pointer;
       overflow: hidden;
-      transition: height 0.3s linear;
+      transition: max-height 0.4s linear;
       background: unset;
       border-bottom: 1px solid var(--white);
 
       &.showed {
-        height: 153px;
+        max-height: 200px;
 
         .faq_list_item_header {
           > svg {
@@ -63,8 +64,8 @@
         display: inline-flex;
         align-items: center;
         justify-content: space-between;
-        min-height: 40px;
-        height: 40px;
+        min-height: 80px;
+        height: 80px;
         padding: 20px 0;
 
         > p {
@@ -78,7 +79,7 @@
         > svg {
           height: 25px;
           width: 25px;
-          transition: transform 0.3s linear;
+          transition: transform 0.3s ease-in-out;
           margin-left: 5px;
         }
       }
@@ -105,14 +106,6 @@
     &_title {
       font-size: 28px;
       line-height: 32px;
-    }
-
-    &_list {
-      &_item {
-        &.showed {
-          height: 170px;
-        }
-      }
     }
   }
 }
@@ -142,10 +135,6 @@
         > span {
           font-size: 12px;
           line-height: 18px;
-        }
-
-        &.showed {
-          height: 180px;
         }
       }
     }

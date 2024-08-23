@@ -6,7 +6,6 @@ import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
 import { useGetUserCartQuery } from "@/api/dataApi";
-// import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 export function Header() {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -44,7 +43,7 @@ export function Header() {
             <Link
               to="/"
               state={{ to: "catalog" }}
-              aria-label="catalog"
+              aria-label="catalog section"
               className={styles.header_link}
             >
               <span>Catalog</span>
@@ -53,13 +52,17 @@ export function Header() {
             <Link
               to="/"
               state={{ to: "faq" }}
-              aria-label="faq"
+              aria-label="faq section"
               className={styles.header_link}
             >
               <span>FAQ</span>
             </Link>
 
-            <Link to="/cart" aria-label="cart" className={styles.header_link}>
+            <Link
+              to="/cart"
+              aria-label="cart page"
+              className={styles.header_link}
+            >
               <span>Cart</span>
 
               <div className={styles.header_link_icon}>
@@ -70,8 +73,12 @@ export function Header() {
               </div>
             </Link>
 
-            <Link to="#" aria-label="profile" className={styles.header_link}>
-              <span>Johnson Smith</span>
+            <Link
+              to="/login"
+              aria-label="login page"
+              className={styles.header_link}
+            >
+              <span>Login</span>
             </Link>
           </div>
         </nav>

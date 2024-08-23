@@ -2,9 +2,11 @@ import { useDispatch, useSelector, useStore } from "react-redux";
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import dataApi from "@/api/dataApi";
+import authApi from "@/api/authApi";
 import cartDetailsSlice from "@/components/cartDetails/cartDetailsSlice";
 import searchBarSlice from "@/components/searchBar/searchBarSlice";
 import productCardListSlice from "@/components/productCardList/productCardListSlice";
+import authSlice from "@/slices/authSlice";
 
 import type { Store, Action } from "@reduxjs/toolkit";
 import type { TypedUseSelectorHook } from "react-redux";
@@ -12,11 +14,13 @@ import type { TypedUseSelectorHook } from "react-redux";
 const rootReducer = combineReducers({
   //apis
   [dataApi.reducerPath]: dataApi.reducer,
+  [authApi.reducerPath]: authApi.reducer,
 
   //slices
   searchBarSlice,
   productCardListSlice,
   cartDetailsSlice,
+  authSlice,
 });
 
 // redux store creation
@@ -25,7 +29,7 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     //middleware connection for the work of RTK query
-    getDefaultMiddleware({}).concat([dataApi.middleware]),
+    getDefaultMiddleware({}).concat([dataApi.middleware, authApi.middleware]),
   devTools: import.meta.env.DEV,
 });
 
