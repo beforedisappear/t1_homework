@@ -11,8 +11,10 @@ import { getErrorMessage } from "@/utils";
 
 import type { LoginForm } from "./loginForm.types";
 import type { SubmitHandler } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 
 export function LoginForm() {
+  const navigate = useNavigate();
   const form = useForm<LoginForm>({ mode: "onSubmit" });
   const { handleSubmit } = form;
 
@@ -23,7 +25,7 @@ export function LoginForm() {
 
     const isPending = toast.loading("Sending data...");
 
-    await login({ ...data, expiresInMins: 5 })
+    await login({ ...data, expiresInMins: 666 })
       .unwrap()
       .then(() => {
         toast.update(isPending, {
@@ -32,6 +34,8 @@ export function LoginForm() {
           isLoading: false,
           autoClose: 3000,
         });
+
+        return navigate("/");
       })
       .catch((error) => {
         console.log(error);

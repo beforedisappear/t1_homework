@@ -1,9 +1,10 @@
-import dataApi, { useGetProductByIdQuery } from "@/api/dataApi";
+import { useGetProductByIdQuery } from "@/api/dataApi";
 import { ErrorBoundary } from "@/components/errorBoundary/ErrorBoundary";
 import {
   ProductDetails,
   ProductDetailsFallback,
 } from "@/components/productDetails";
+import { useAppSelector } from "@/store";
 
 import { Helmet } from "react-helmet-async";
 
@@ -13,21 +14,23 @@ export function ProductByIdPage() {
   const { id } = useParams<{ id: string }>();
 
   const {
-    data,
+    data: product,
     isLoading: isProductByIdLoading,
     isError,
-    error,
+    error: productError,
   } = useGetProductByIdQuery({ id: id as string }, { skip: !id });
 
-  //get cart data from existing endpoint
-  const { data: productCardsInCart, isLoading: isCartLoading } =
-    dataApi.endpoints.getUserCart.useQueryState({
-      id: "6",
-    });
+  const {
+    data: productCardsInCart,
+    loading,
+    error: cartError,
+  } = useAppSelector((state) => state.cartDetailsSlice.cart);
 
-  if (isProductByIdLoading || isCartLoading) return <ProductDetailsFallback />;
-  else if (isError || !data) {
-    if (error && "status" in error) {
+  //get cart data from existing endpoint
+
+  if (isProductByIdLoading || loading) return <ProductDetailsFallback />;
+  else if (isError || !product || cartError) {
+    if (productError && "status" in productError) {
       return <ErrorBoundary message="404 | Page not found" />;
     }
 
@@ -37,7 +40,7 @@ export function ProductByIdPage() {
   return (
     <>
       <Helmet>
-        <title>{`${data.title} | Goods4you`}</title>
+        <title>{`${product.title} | Goods4you`}</title>
         <meta
           name="description"
           content="Any products from famous brands with worldwide delivery"
@@ -45,11 +48,11 @@ export function ProductByIdPage() {
       </Helmet>
 
       <ProductDetails
-        data={data}
+        data={product}
+        cartId={productCardsInCart?.id}
         countInCart={
-          productCardsInCart?.carts[0].products.find(
-            (el) => el.id === Number(id)
-          )?.quantity
+          productCardsInCart?.products.find((el) => el.id === Number(id))
+            ?.quantity
         }
       />
     </>

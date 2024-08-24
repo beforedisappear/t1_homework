@@ -72,4 +72,10 @@ export interface IProductRequest {
   id: string;
 }
 
+export interface IUpdateCartRequest {
+  products: { id: number; quantity: number }[];
+  cartId: number;
+  action: "add" | "remove" | "clear";
+}
+
 export type ProductResponse = IProduct;

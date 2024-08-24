@@ -16,12 +16,12 @@ export function CartTotal({ data }: IProps) {
         </div>
         <div className={styles.cart_total_common_price_wo_discount}>
           <span>Price without discount</span>
-          <span>{`$${data.discountedTotal}`}</span>
+          <span>{`$${Math.abs(data.total).toFixed(2)}`}</span>
         </div>
       </div>
       <div className={styles.cart_total_price}>
         <span>Total price</span>
-        <span>{`$${data.total}`}</span>
+        <span>{`$${data.discountedTotal.toFixed(2)}`}</span>
       </div>
     </section>
   );

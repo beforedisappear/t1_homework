@@ -2,7 +2,7 @@ import styles from "./searchBar.module.scss";
 import cn from "clsx";
 
 import { useAppDispatch } from "@/store";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useDebounce } from "@/hooks/useDebounce";
 
 import { setSearchValue } from "./searchBarSlice";
@@ -21,6 +21,12 @@ export function SearchBar() {
     setValue(value);
     debouncedSearchValue(value);
   };
+
+  useEffect(() => {
+    return () => {
+      dispatch(setSearchValue(""));
+    };
+  }, []);
 
   return (
     <>

@@ -5,19 +5,64 @@ import Plus from "@/assets/icons/common/plus.svg?svgr";
 import Minus from "@/assets/icons/common/minus.svg?svgr";
 
 import { useState } from "react";
+import { updateProductsInCartByUserId } from "../cartDetails/cartDetailsSlice";
+import { useAppDispatch } from "@/store";
 
 import { Link } from "react-router-dom";
 
 import type { IShortProduct } from "@/types";
-import { getFinalPrice } from "@/utils";
+import { getFinalPrice, promiseToastError, promiseToastSuccess } from "@/utils";
+import { toast } from "react-toastify";
 
 interface CartFormItemProps {
   index: number;
   data: IShortProduct;
+  cartId: number;
 }
 
-export function CartFormItem({ index, data }: CartFormItemProps) {
+export function CartFormItem({ index, data, cartId }: CartFormItemProps) {
+  const dispatch = useAppDispatch();
+  //locale state to avoid all item list rendering
+  const [isLoading, setIsLoading] = useState(false);
   const [counterValue, setCounterValue] = useState(data.quantity);
+
+  const updateCartQuantity = async (action: "add" | "remove" | "clear") => {
+    const isPending = toast.loading("Sending data...");
+    setIsLoading(true);
+
+    let prevValue = counterValue;
+    let newValue = counterValue;
+
+    if (action === "add") {
+      newValue++;
+      setCounterValue((counterValue) => counterValue + 1);
+    } else if (action === "remove") {
+      newValue--;
+      setCounterValue((counterValue) => counterValue - 1);
+    } else if (action === "clear") {
+      setCounterValue(0);
+      newValue = 0;
+    }
+
+    let dto = {
+      products: [{ id: data.id, quantity: newValue }],
+      cartId,
+      action,
+    };
+
+    await dispatch(updateProductsInCartByUserId(dto))
+      .unwrap()
+      .then(() => {
+        promiseToastSuccess(isPending, "Success");
+      })
+      .catch((err) => {
+        setCounterValue(prevValue);
+        promiseToastError(isPending, err);
+      })
+      .finally(() => {
+        setIsLoading(false);
+      });
+  };
 
   return (
     <div
@@ -48,9 +93,8 @@ export function CartFormItem({ index, data }: CartFormItemProps) {
               <button
                 aria-label={`delete one more product`}
                 className={cn(styles.cart_form_item_control_btn, "primary_btn")}
-                onClick={() =>
-                  setCounterValue((counterValue) => counterValue - 1)
-                }
+                onClick={() => updateCartQuantity("remove")}
+                disabled={isLoading}
               >
                 <Minus />
               </button>
@@ -62,9 +106,8 @@ export function CartFormItem({ index, data }: CartFormItemProps) {
               <button
                 aria-label={`add one more product`}
                 className={cn(styles.cart_form_item_control_btn, "primary_btn")}
-                onClick={() =>
-                  setCounterValue((counterValue) => counterValue + 1)
-                }
+                onClick={() => updateCartQuantity("add")}
+                disabled={isLoading}
               >
                 <Plus />
               </button>
@@ -73,7 +116,8 @@ export function CartFormItem({ index, data }: CartFormItemProps) {
             <button
               id={styles.delete_btn}
               aria-label={`delete product from cart`}
-              onClick={() => setCounterValue(0)}
+              onClick={() => updateCartQuantity("clear")}
+              disabled={isLoading}
             >
               Delete
             </button>
@@ -82,7 +126,8 @@ export function CartFormItem({ index, data }: CartFormItemProps) {
           <button
             aria-label={`add  one product to cart`}
             className={cn(styles.cart_form_item_control_btn, "primary_btn")}
-            onClick={() => setCounterValue((counterValue) => counterValue + 1)}
+            onClick={() => updateCartQuantity("add")}
+            disabled={isLoading}
           >
             <Cart />
           </button>

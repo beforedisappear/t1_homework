@@ -2,14 +2,20 @@ import styles from "./header.module.scss";
 import cn from "clsx";
 import Cart from "@/assets/icons/common/cart.svg?svgr";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
-import { useGetUserCartQuery } from "@/api/dataApi";
+// import { useGetUserCartQuery } from "@/api/dataApi";
+import { useGetUserQuery } from "@/api/userApi";
 
-export function Header() {
+import { useAppDispatch, useAppSelector } from "@/store";
+import { fetchProductsInCartByUserId } from "../cartDetails/cartDetailsSlice";
+
+export function PrivateHeader() {
+  const dispatch = useAppDispatch();
   const ref = useRef<HTMLDivElement | null>(null);
   const [showNavigation, setShowNavigation] = useState(false);
+  const { data } = useAppSelector((state) => state.cartDetailsSlice.cart);
 
   const onShowNavigation = () => {
     setShowNavigation((showNavigation) => !showNavigation);
@@ -17,7 +23,20 @@ export function Header() {
 
   useOutsideClick(ref, () => setShowNavigation(false));
 
-  const { data, isSuccess } = useGetUserCartQuery({ id: "6" });
+  const { data: userData, isSuccess: isGetUserSuccess } =
+    useGetUserQuery(undefined);
+
+  useEffect(() => {
+    if (userData) {
+      dispatch(fetchProductsInCartByUserId({ id: userData.id }));
+    }
+  }, []);
+
+  // const { data: cartData, isSuccess: isGetUserCartSuccess } =
+  //   useGetUserCartQuery(
+  //     { id: (userData as IUser)?.id as number },
+  //     { skip: !userData }
+  //   );
 
   return (
     <header className={styles.header}>
@@ -67,18 +86,18 @@ export function Header() {
 
               <div className={styles.header_link_icon}>
                 <Cart aria-hidden />
-                {isSuccess && data.carts.length > 0 && (
-                  <div>{data.carts[0].totalQuantity}</div>
-                )}
+                {data && <div>{data.totalQuantity}</div>}
               </div>
             </Link>
 
             <Link
-              to="/login"
+              to="/#"
               aria-label="login page"
               className={styles.header_link}
             >
-              <span>Login</span>
+              {isGetUserSuccess && (
+                <span>{`${userData.firstName} ${userData.lastName}`}</span>
+              )}
             </Link>
           </div>
         </nav>

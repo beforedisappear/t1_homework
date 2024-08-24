@@ -5,22 +5,14 @@ import { CartTotal } from "@/components/cartTotal/CartTotal";
 import { ErrorBoundary } from "../errorBoundary/ErrorBoundary";
 import { CartDetailsFallback } from "./CartDetails.fallback";
 
-import { useAppDispatch, useAppSelector } from "@/store";
-import { useEffect } from "react";
-
-import { fetchProductsInCartByUserId } from "./cartDetailsSlice";
+import { useAppSelector } from "@/store";
 
 export function CartDetails() {
-  const dispatch = useAppDispatch();
   const { data, loading, error } = useAppSelector(
-    (state) => state.cartDetailsSlice
+    (state) => state.cartDetailsSlice.cart
   );
 
-  useEffect(() => {
-    dispatch(fetchProductsInCartByUserId("6"));
-  }, []);
-
-  if (loading || !data) return <CartDetailsFallback />;
+  if (loading) return <CartDetailsFallback />;
   else if (error) return <ErrorBoundary message={error.message} />;
 
   return (
@@ -28,12 +20,12 @@ export function CartDetails() {
       <h1 className={styles.cart_details_title}>My cart</h1>
 
       <div className={styles.cart_details_content}>
-        {data.carts.length === 0 ? (
+        {!data ? (
           <span className={styles.no_items}>no items</span>
         ) : (
           <>
-            <CartForm data={data.carts[0]} />
-            <CartTotal data={data.carts[0]} />
+            <CartForm data={data} />
+            <CartTotal data={data} />
           </>
         )}
       </div>

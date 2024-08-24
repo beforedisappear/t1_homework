@@ -18,5 +18,5 @@ export interface ICartResponse {
 }
 
 export interface ICartRequest {
-  id: string;
+  id: number;
 }

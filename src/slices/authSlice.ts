@@ -1,4 +1,5 @@
 import authApi from "@/api/authApi";
+import userApi from "@/api/userApi";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type Token = string | null;
@@ -17,13 +18,21 @@ const authSlice = createSlice({
     },
   },
   extraReducers: (builder) => {
-    builder.addMatcher(
-      authApi.endpoints.login.matchFulfilled,
-      (state, { payload }) => {
-        state.token = payload.token;
-        localStorage.setItem("token", payload.token);
-      }
-    );
+    builder
+      .addMatcher(
+        authApi.endpoints.login.matchFulfilled,
+        (state, { payload }) => {
+          state.token = payload.token;
+          localStorage.setItem("token", payload.token);
+        }
+      )
+      .addMatcher(userApi.endpoints.getUser.matchRejected, (state, action) => {
+        //if unauthorized
+        if (action.payload?.status === 401) {
+          state.token = null;
+          localStorage.removeItem("token");
+        }
+      });
   },
 });
 

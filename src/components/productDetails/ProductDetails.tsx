@@ -7,16 +7,17 @@ import type { IProduct } from "@/types";
 
 interface IProps {
   data: IProduct;
-  countInCart?: number;
+  countInCart: number | undefined;
+  cartId: number | undefined;
 }
 
-export function ProductDetails({ data, countInCart }: IProps) {
+export function ProductDetails({ data, countInCart, cartId }: IProps) {
   return (
     <article className={styles.product_details}>
       <div className={styles.product_details_content}>
         <ProductGallery images={data.images} />
 
-        <ProductInfo data={data} countInCart={countInCart} />
+        <ProductInfo data={data} countInCart={countInCart} cartId={cartId} />
       </div>
     </article>
   );

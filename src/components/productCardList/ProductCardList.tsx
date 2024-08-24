@@ -3,10 +3,11 @@ import styles from "./productCardList.module.scss";
 import { ProductCardListFallback } from "./ProductCardList.fallback";
 import { ProductCardListPlaceholder } from "./ProductCardList.placeholder";
 import { ProductCard } from "@/components/productCard/ProductCard";
+import { ErrorBoundary } from "../errorBoundary/ErrorBoundary";
 
 import { setPage } from "./productCardListSlice";
 
-import dataApi, { useGetProductListQuery } from "@/api/dataApi";
+import { useGetProductListQuery } from "@/api/dataApi";
 import { useAppDispatch, useAppSelector } from "@/store";
 
 export function ProductCardList() {
@@ -15,6 +16,13 @@ export function ProductCardList() {
   const searchValue = useAppSelector(
     (state) => state.searchBarSlice.searchValue
   );
+
+  //get cart data from AsyncThunk called in header
+  const {
+    data: productCardsInCart,
+    loading,
+    error,
+  } = useAppSelector((state) => state.cartDetailsSlice.cart);
 
   const {
     originalArgs,
@@ -27,15 +35,9 @@ export function ProductCardList() {
     page,
   });
 
-  //get cart data from existing endpoint
-  const { data: productCardsInCart } =
-    dataApi.endpoints.getUserCart.useQueryState({
-      id: "6",
-    });
-
-  if (isLoading || (isFetching && originalArgs?.page === 0))
+  if (isLoading || (isFetching && originalArgs?.page === 0) || loading)
     return <ProductCardListFallback />;
-  else if (isError || !productCardList) return <h2>ошибка</h2>;
+  else if (isError || !productCardList || error) return <ErrorBoundary />;
 
   //condition not to display "show more" button
   const isNoProducts =
@@ -43,7 +45,7 @@ export function ProductCardList() {
 
   //get object: { product id in the cart: quantity of products in the cart }
   const productIdsInCart: Record<number, number> = {};
-  productCardsInCart?.carts[0].products.forEach((el) => {
+  productCardsInCart?.products.forEach((el) => {
     productIdsInCart[el.id] = el.quantity;
   });
 
@@ -56,6 +58,7 @@ export function ProductCardList() {
 
           return (
             <ProductCard
+              cartId={productCardsInCart?.id}
               key={el.id}
               index={i}
               data={el}

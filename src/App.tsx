@@ -1,6 +1,11 @@
 import "./styles/global.scss";
 
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import {
+  createBrowserRouter,
+  LoaderFunctionArgs,
+  redirect,
+  RouterProvider,
+} from "react-router-dom";
 
 import { RootLayout } from "@/components/rootLayout/RootLayout";
 
@@ -9,42 +14,63 @@ import { CartPage } from "@/pages/CartPage";
 import { ProductByIdPage } from "@/pages/ProductByIdPage";
 import { NotFoundPage } from "@/pages/NotFoundPage";
 import { LoginPage } from "@/pages/LoginPage";
-import { useAppSelector } from "./store";
+
+import { useAppDispatch, useAppSelector } from "./store";
+import { useLayoutEffect } from "react";
+
+import { setAccessToken } from "./slices/authSlice";
 
 function App() {
+  const dispatch = useAppDispatch();
+  const userToken = localStorage.getItem("token");
   const token = useAppSelector((state) => state.authSlice.token);
+
+  useLayoutEffect(() => {
+    //save token to store when app initializing
+    if (userToken) dispatch(setAccessToken(userToken));
+  }, []);
+
+  const privateRoutes = [
+    { index: true, element: <MainPage /> },
+    {
+      path: "/product/:id",
+      element: <ProductByIdPage />,
+    },
+    {
+      path: "/cart",
+      element: <CartPage />,
+    },
+  ];
 
   const publicRoutes = [
     {
+      path: "/login",
+      element: <LoginPage />,
+    },
+  ];
+
+  const router = createBrowserRouter([
+    {
       path: "/",
-      element: <RootLayout />,
+      element: <RootLayout isPrivate={!!token} />,
+      loader: ({ request }: LoaderFunctionArgs) => {
+        const url = new URL(request.url);
+
+        //redirect to /login if user isn't logged in
+        if (!userToken && url.pathname !== "/login") {
+          return redirect("/login");
+        }
+
+        return null;
+      },
       children: [
-        { index: true, element: <MainPage /> },
-        {
-          path: "/product/:id",
-          element: <ProductByIdPage />,
-        },
-        {
-          path: "/cart",
-          element: <CartPage />,
-        },
-        {
-          path: "/login",
-          element: <LoginPage />,
-        },
+        ...(token ? privateRoutes : publicRoutes),
         {
           path: "/*",
           element: <NotFoundPage />,
         },
       ],
     },
-  ];
-
-  const privateRoutes = [{ path: "/login", element: <h1>2</h1> }];
-
-  const router = createBrowserRouter([
-    ...publicRoutes,
-    ...(token ? privateRoutes : []),
   ]);
 
   return <RouterProvider router={router} />;

@@ -8,7 +8,12 @@ export function CartForm({ data }: { data: ICart }) {
   return (
     <section className={styles.cart_form}>
       {data.products.map((el, i) => (
-        <CartFormItem key={`cart_item_${i}`} index={i} data={el} />
+        <CartFormItem
+          key={`cart_item_${i}`}
+          index={i}
+          data={el}
+          cartId={data.id}
+        />
       ))}
     </section>
   );

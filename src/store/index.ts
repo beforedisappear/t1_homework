@@ -3,6 +3,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 
 import dataApi from "@/api/dataApi";
 import authApi from "@/api/authApi";
+import userApi from "@/api/userApi";
 import cartDetailsSlice from "@/components/cartDetails/cartDetailsSlice";
 import searchBarSlice from "@/components/searchBar/searchBarSlice";
 import productCardListSlice from "@/components/productCardList/productCardListSlice";
@@ -15,6 +16,7 @@ const rootReducer = combineReducers({
   //apis
   [dataApi.reducerPath]: dataApi.reducer,
   [authApi.reducerPath]: authApi.reducer,
+  [userApi.reducerPath]: userApi.reducer,
 
   //slices
   searchBarSlice,
@@ -29,7 +31,11 @@ export const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) =>
     //middleware connection for the work of RTK query
-    getDefaultMiddleware({}).concat([dataApi.middleware, authApi.middleware]),
+    getDefaultMiddleware({}).concat([
+      dataApi.middleware,
+      authApi.middleware,
+      userApi.middleware,
+    ]),
   devTools: import.meta.env.DEV,
 });
 

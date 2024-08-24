@@ -5,7 +5,11 @@ import Plus from "@/assets/icons/common/plus2.svg?svgr";
 import Minus from "@/assets/icons/common/minus2.svg?svgr";
 
 import { v4 as uuidv4 } from "uuid";
-import { getFinalPrice } from "@/utils";
+import { getFinalPrice, promiseToastError, promiseToastSuccess } from "@/utils";
+import { toast } from "react-toastify";
+
+import { updateProductsInCartByUserId } from "../cartDetails/cartDetailsSlice";
+import { useAppDispatch, useAppSelector } from "@/store";
 import { useState } from "react";
 
 import type { IProduct } from "@/types";
@@ -13,9 +17,14 @@ import type { IProduct } from "@/types";
 interface IProps {
   data: IProduct;
   countInCart?: number;
+  cartId: number | undefined;
 }
 
-export function ProductInfo({ data, countInCart }: IProps) {
+export function ProductInfo({ data, countInCart, cartId }: IProps) {
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector(
+    (state) => state.cartDetailsSlice.updateCart
+  );
   const [counterValue, setCounterValue] = useState(countInCart || 0);
 
   let rating = Math.ceil(data.rating);
@@ -23,6 +32,37 @@ export function ProductInfo({ data, countInCart }: IProps) {
   let activeStarClass = cn(styles.product_info_rating_star, styles.active);
 
   let inactiveStarClass = styles.product_info_rating_star;
+
+  const updateCartQuantity = async (action: "add" | "remove") => {
+    const isPending = toast.loading("Sending data...");
+
+    let prevValue = counterValue;
+    let newValue = counterValue;
+
+    if (action === "add") {
+      setCounterValue((counterValue) => counterValue + 1);
+      newValue++;
+    } else if (action === "remove") {
+      setCounterValue((counterValue) => counterValue - 1);
+      newValue--;
+    }
+
+    let dto = {
+      products: [{ id: data.id, quantity: newValue }],
+      cartId: cartId as number,
+      action,
+    };
+
+    await dispatch(updateProductsInCartByUserId(dto))
+      .unwrap()
+      .then(() => {
+        promiseToastSuccess(isPending, "Success");
+      })
+      .catch((err) => {
+        setCounterValue(prevValue);
+        promiseToastError(isPending, err);
+      });
+  };
 
   return (
     <section className={styles.product_info}>
@@ -83,10 +123,9 @@ export function ProductInfo({ data, countInCart }: IProps) {
           {counterValue > 0 ? (
             <>
               <button
-                onClick={() =>
-                  setCounterValue((counterValue) => counterValue - 1)
-                }
+                onClick={() => updateCartQuantity("remove")}
                 className={cn(styles.product_info_nav_btn, "primary_btn")}
+                disabled={loading || data.stock === 0 || !cartId}
               >
                 <Minus />
               </button>
@@ -96,10 +135,9 @@ export function ProductInfo({ data, countInCart }: IProps) {
               </span>
 
               <button
-                onClick={() =>
-                  setCounterValue((counterValue) => counterValue + 1)
-                }
+                onClick={() => updateCartQuantity("add")}
                 className={cn(styles.product_info_nav_btn, "primary_btn")}
+                disabled={loading || data.stock === 0 || !cartId}
               >
                 <Plus />
               </button>
@@ -107,10 +145,9 @@ export function ProductInfo({ data, countInCart }: IProps) {
           ) : (
             <button
               id={styles.add_to_cart}
-              onClick={() =>
-                setCounterValue((counterValue) => counterValue + 1)
-              }
+              onClick={() => updateCartQuantity("add")}
               className="primary_btn"
+              disabled={loading || data.stock === 0 || !cartId}
             >
               Add to cart
             </button>
