@@ -1,5 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+import { RootState } from "@/store";
 import type {
   // ICartRequest,
   // ICartResponse,
@@ -13,7 +14,14 @@ import type {
 
 const dataApi = createApi({
   reducerPath: "dataApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://dummyjson.com" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://dummyjson.com",
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).authSlice.token;
+      if (token) headers.set("authorization", `Bearer ${token}`);
+      return headers;
+    },
+  }),
 
   endpoints: (builder) => ({
     // getUserCart: builder.query<ICartResponse, ICartRequest>({

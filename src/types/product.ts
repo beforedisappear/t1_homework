@@ -6,6 +6,7 @@ export interface IShortProduct {
   total: number;
   discountPercentage: number;
   discountedTotal: number;
+  discountedPrice?: number;
   thumbnail: string;
 }
 

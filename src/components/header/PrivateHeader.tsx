@@ -30,7 +30,7 @@ export function PrivateHeader() {
     if (userData) {
       dispatch(fetchProductsInCartByUserId({ id: userData.id }));
     }
-  }, []);
+  }, [isGetUserSuccess]);
 
   // const { data: cartData, isSuccess: isGetUserCartSuccess } =
   //   useGetUserCartQuery(
