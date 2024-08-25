@@ -26,11 +26,13 @@ export function ProductByIdPage() {
     error: cartError,
   } = useAppSelector((state) => state.cartDetailsSlice.cart);
 
-  //get cart data from existing endpoint
-
   if (isProductByIdLoading || loading) return <ProductDetailsFallback />;
   else if (isError || !product || cartError) {
-    if (productError && "status" in productError) {
+    if (
+      productError &&
+      "status" in productError &&
+      productError.status === 404
+    ) {
       return <ErrorBoundary message="404 | Page not found" />;
     }
 

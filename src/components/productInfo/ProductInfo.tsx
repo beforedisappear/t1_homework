@@ -27,7 +27,7 @@ export function ProductInfo({ data, countInCart, cartId }: IProps) {
   );
   const [counterValue, setCounterValue] = useState(countInCart || 0);
 
-  let rating = Math.ceil(data.rating);
+  let rating = Math.round(data.rating);
 
   let activeStarClass = cn(styles.product_info_rating_star, styles.active);
 
@@ -75,7 +75,7 @@ export function ProductInfo({ data, countInCart, cartId }: IProps) {
               let star = (
                 <Star
                   key={uuidv4()}
-                  className={rating > 1 ? activeStarClass : inactiveStarClass}
+                  className={rating > 0 ? activeStarClass : inactiveStarClass}
                 />
               );
 
@@ -83,7 +83,9 @@ export function ProductInfo({ data, countInCart, cartId }: IProps) {
               return star;
             })}
           </div>
-          <span className={styles.product_info_category}>{data.category}</span>
+          <span className={styles.product_info_category}>
+            {data.tags.join(", ")}
+          </span>
         </div>
       </div>
 

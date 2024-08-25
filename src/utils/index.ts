@@ -2,8 +2,12 @@ import { isFetchBaseQueryErrorType } from "@/typeGuards";
 
 import { toast, type Id } from "react-toastify";
 
-export const getFinalPrice = (price: number, discount: number) => {
-  return (price - (price * discount) / 100).toFixed();
+export const getFinalPrice = (
+  price: number,
+  discount: number,
+  fixed: number = 2
+) => {
+  return (price - (price * discount) / 100).toFixed(fixed);
 };
 
 export function getErrorMessage(error: unknown) {
@@ -45,4 +49,20 @@ export function promiseToastError(promise: Id, error: any) {
     isLoading: false,
     autoClose: 2000,
   });
+}
+
+export function createQueryString(
+  queryParams: [string, string | number | string[]][]
+) {
+  return queryParams.reduce((acc, [key, value]) => {
+    if (value !== undefined) {
+      const encodedKey = encodeURIComponent(key);
+      const encodedValue = encodeURIComponent(String(value));
+
+      return acc
+        ? `${acc}&${encodedKey}=${encodedValue}`
+        : `${encodedKey}=${encodedValue}`;
+    }
+    return acc;
+  }, "");
 }

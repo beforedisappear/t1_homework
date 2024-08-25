@@ -81,7 +81,7 @@ export function CartFormItem({ index, data, cartId }: CartFormItemProps) {
             {data.title}
           </Link>
           <span className={styles.cart_form_item_info_price}>
-            {`$${getFinalPrice(data.price, data.discountPercentage)}`}
+            {`$${getFinalPrice(data.price, data.discountPercentage, 0)}`}
           </span>
         </div>
       </div>

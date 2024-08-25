@@ -19,6 +19,7 @@ import { useAppDispatch, useAppSelector } from "./store";
 import { useLayoutEffect } from "react";
 
 import { setAccessToken } from "./slices/authSlice";
+import { ErrorBoundary } from "./components/errorBoundary/ErrorBoundary";
 
 function App() {
   const dispatch = useAppDispatch();
@@ -70,6 +71,7 @@ function App() {
           element: <NotFoundPage />,
         },
       ],
+      errorElement: <ErrorBoundary />,
     },
   ]);
 

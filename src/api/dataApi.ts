@@ -11,6 +11,7 @@ import type {
   // IUpdateCartRequest,
   // ICart,
 } from "@/types";
+import { createQueryString } from "@/utils";
 
 const dataApi = createApi({
   reducerPath: "dataApi",
@@ -30,7 +31,7 @@ const dataApi = createApi({
 
     getProductList: builder.query<IProductListResponse, IProductListRequest>({
       query: ({ q, page = 0, limit = 12 }) =>
-        `/products/search?q=${q}&limit=${limit}&skip=${page * limit}`,
+        `/products/search?${createQueryString(Object.entries({ skip: page * limit, q }))}`,
 
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
