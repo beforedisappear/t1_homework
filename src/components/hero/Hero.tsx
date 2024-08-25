@@ -9,7 +9,7 @@ export function Hero() {
   return (
     <section className={styles.hero}>
       <div className={styles.hero_content}>
-        <span className={styles.hero_background_title}>Goods4you</span>
+        <h1 className={styles.hero_background_title}>Goods4you</h1>
 
         <p className={styles.hero_title}>
           {`Any products from famous brands \n with worldwide delivery`}

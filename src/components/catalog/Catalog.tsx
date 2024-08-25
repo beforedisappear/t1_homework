@@ -13,7 +13,7 @@ export function Catalog() {
 
   return (
     <section id="catalog" ref={ref} className={styles.catalog}>
-      <h1>Catalog</h1>
+      <h2>Catalog</h2>
 
       <SearchBar />
 

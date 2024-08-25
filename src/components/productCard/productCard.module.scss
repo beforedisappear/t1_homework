@@ -1,10 +1,19 @@
 @use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
 
 .product_card {
   position: relative;
   display: flex;
   flex-direction: column;
   row-gap: 10px;
+  max-width: 370px;
+
+  &.loading {
+    background: gray;
+    border-radius: 10px;
+
+    @include skeleton();
+  }
 
   &_img {
     position: relative;
@@ -42,15 +51,14 @@
         font-weight: 800;
       }
 
-      &:hover {
-        background: rgba($color: #878787, $alpha: 0.25);
+      @media (hover: hover) {
+        &:hover {
+          background: rgba($color: #878787, $alpha: 0.25);
 
-        .product_card_info_title {
-          text-decoration: unset;
-        }
-
-        &::after {
-          content: "Show details";
+          &::after {
+            content: "Show details";
+            text-align: center;
+          }
         }
       }
     }
@@ -60,6 +68,7 @@
     display: flex;
     align-items: center;
     column-gap: 10px;
+    min-height: 50px;
   }
 
   &_info {
@@ -81,6 +90,12 @@
       font-size: 16px;
       font-weight: 700;
       line-height: 20px;
+
+      @media (hover: hover) {
+        &:hover {
+          text-decoration: underline;
+        }
+      }
     }
 
     &_price {
@@ -119,6 +134,7 @@
   .product_card {
     &_content {
       flex-direction: column;
+      min-height: 99px;
     }
 
     &_nav {
@@ -130,6 +146,10 @@
 
 @media (max-width: $md) {
   .product_card {
+    &_content {
+      min-height: 71px;
+    }
+
     &_info {
       &_title {
         font-size: 14px;

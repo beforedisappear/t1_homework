@@ -1,0 +1,14 @@
+.error_boundary {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+
+  > span {
+    padding: 0px 20px;
+    text-align: center;
+    font-size: 28px;
+    font-weight: 500;
+    color: var(--gray);
+  }
+}

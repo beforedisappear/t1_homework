@@ -17,5 +17,6 @@
 
   &:disabled {
     background-color: var(--pink);
+    cursor: not-allowed;
   }
 }

@@ -1,4 +1,5 @@
 @use "../../styles/variables.scss" as *;
+@use "../../styles/mixins.scss" as *;
 
 .product_info {
   display: flex;
@@ -6,12 +7,20 @@
   align-items: flex-start;
   row-gap: 24px;
   height: auto;
+  flex-grow: 1;
+  width: 100%;
 
   &_common {
     display: flex;
     flex-direction: column;
     width: 100%;
     row-gap: 16px;
+
+    &.loading {
+      height: 96px;
+      border-radius: 6px;
+      @include skeleton();
+    }
 
     > h1 {
       margin: 0px;
@@ -39,13 +48,15 @@
     align-items: center;
     column-gap: 8px;
 
-    &_star path {
-      fill: var(--red);
-    }
-
-    :last-child {
+    &_star {
       path {
         fill: #d5d5d5;
+      }
+
+      &.active {
+        path {
+          fill: var(--red);
+        }
       }
     }
   }
@@ -58,6 +69,12 @@
     font-size: 18px;
     line-height: 24px;
     width: 100%;
+
+    &.loading {
+      border: unset;
+      border-radius: 6px;
+      @include skeleton();
+    }
   }
 
   &_description {
@@ -65,6 +82,13 @@
     font-weight: 400;
     line-height: 30px;
     color: var(--gray);
+
+    &.loading {
+      border-radius: 6px;
+      height: 250px;
+      width: 100%;
+      @include skeleton();
+    }
   }
 
   &_details {
@@ -90,11 +114,8 @@
     padding: 12px;
     background: rgba(0, 0, 0, 0.04);
 
-    > button {
-      height: 62px;
-      width: 176px;
-      padding: 14px;
-      border-radius: 4px;
+    &.loading {
+      @include skeleton();
     }
   }
 
@@ -146,6 +167,46 @@
       color: #444b58;
     }
   }
+
+  &_nav {
+    display: flex;
+    align-items: center;
+    column-gap: 30px;
+
+    > span {
+      text-align: center;
+      width: 48px;
+    }
+
+    &_btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 70px;
+      height: 62px;
+      border-radius: 4px;
+      padding: 20px;
+
+      > svg {
+        width: 30px;
+      }
+    }
+
+    > #add_to_cart {
+      height: 62px;
+      width: 176px;
+      padding: 14px;
+      border-radius: 4px;
+    }
+  }
+}
+
+@media (max-width: $xl) {
+  .product_info {
+    &_nav {
+      column-gap: 10px;
+    }
+  }
 }
 
 @media (max-width: $md) {
@@ -154,6 +215,12 @@
       > h1 {
         font-size: 24px;
         line-height: 30px;
+      }
+    }
+
+    &_description {
+      &.loading {
+        height: 150px;
       }
     }
 

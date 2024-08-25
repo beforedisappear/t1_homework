@@ -5,6 +5,8 @@ import Cart from "@/assets/icons/common/cart.svg?svgr";
 import { useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { useOutsideClick } from "@/hooks/useOutsideClick";
+import { useGetUserCartQuery } from "@/api/dataApi";
+// import { useOutsideClick } from "@/hooks/useOutsideClick";
 
 export function Header() {
   const ref = useRef<HTMLDivElement | null>(null);
@@ -15,6 +17,8 @@ export function Header() {
   };
 
   useOutsideClick(ref, () => setShowNavigation(false));
+
+  const { data, isSuccess } = useGetUserCartQuery({ id: "6" });
 
   return (
     <header className={styles.header}>
@@ -60,7 +64,9 @@ export function Header() {
 
               <div className={styles.header_link_icon}>
                 <Cart aria-hidden />
-                <div>1</div>
+                {isSuccess && data.carts.length > 0 && (
+                  <div>{data.carts[0].totalQuantity}</div>
+                )}
               </div>
             </Link>
 

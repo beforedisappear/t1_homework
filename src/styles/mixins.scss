@@ -1,0 +1,15 @@
+@mixin skeleton($add: false) {
+  background: linear-gradient(90deg, #eee, #f9f9f9, #eee);
+  animation: leftToRight 1.5s infinite reverse;
+  background-size: 200%;
+
+  @keyframes leftToRight {
+    0% {
+      background-position: -100% 0;
+    }
+
+    100% {
+      background-position: 100% 0;
+    }
+  }
+}
