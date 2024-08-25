@@ -49,3 +49,12 @@ export const useAppDispatch: () => AppDispatch = useDispatch;
 
 //create own type useStore hook for corret work
 export const useAppStore: () => Store<RootState, Action<any>> = useStore;
+
+export const setupStore = (preloadedState?: Partial<RootState>) => {
+  return configureStore({
+    reducer: rootReducer,
+    preloadedState,
+  });
+};
+
+export type AppStore = ReturnType<typeof setupStore>;

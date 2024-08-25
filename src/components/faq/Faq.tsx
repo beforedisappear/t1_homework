@@ -29,6 +29,7 @@ export function Faq() {
           {faqData.map((el, i) => (
             <li key={el.title}>
               <button
+                data-testid={`faq_btn_${i}`}
                 key={`faq_list_${i}`}
                 className={cn(styles.faq_list_item, {
                   [styles.showed]: showSection[i],

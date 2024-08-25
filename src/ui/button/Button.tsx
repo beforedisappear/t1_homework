@@ -4,7 +4,6 @@ import type { ButtonHTMLAttributes } from "react";
 
 interface IButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant: "primary";
-  cssClass?: string;
   children?: React.ReactNode;
 }
 

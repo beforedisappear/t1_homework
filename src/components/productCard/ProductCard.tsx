@@ -93,9 +93,10 @@ export function ProductCard({ index, data, countInCart, cartId }: IProps) {
           {counterValue > 0 ? (
             <>
               <button
+                data-testid="decrease_product"
                 onClick={() => updateCartQuantity("remove")}
                 className="primary_btn"
-                disabled={isLoading || !cartId}
+                disabled={isLoading || cartId === undefined}
               >
                 <Minus />
               </button>
@@ -105,18 +106,24 @@ export function ProductCard({ index, data, countInCart, cartId }: IProps) {
               </span>
 
               <button
+                data-testid="increase_product"
                 className="primary_btn"
                 onClick={() => updateCartQuantity("add")}
-                disabled={isLoading || data.stock === counterValue || !cartId}
+                disabled={
+                  isLoading ||
+                  data.stock === counterValue ||
+                  cartId === undefined
+                }
               >
                 <Plus />
               </button>
             </>
           ) : (
             <button
+              data-testid="add_to_cart_btn"
               onClick={() => updateCartQuantity("add")}
               className="primary_btn"
-              disabled={isLoading || data.stock === 0 || !cartId}
+              disabled={isLoading || data.stock === 0 || cartId === undefined}
             >
               <Cart />
             </button>

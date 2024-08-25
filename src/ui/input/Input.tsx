@@ -7,10 +7,9 @@ import {
 } from "react-hook-form";
 import type { InputHTMLAttributes } from "react";
 
-interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
+export interface IInputProps extends InputHTMLAttributes<HTMLInputElement> {
   name: string;
   rules?: RegisterOptions<FieldValues, string> | undefined;
-  cssClass?: string;
   children?: React.ReactNode;
 }
 

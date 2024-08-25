@@ -125,7 +125,7 @@ export function ProductInfo({ data, countInCart, cartId }: IProps) {
               <button
                 onClick={() => updateCartQuantity("remove")}
                 className={cn(styles.product_info_nav_btn, "primary_btn")}
-                disabled={loading || data.stock === 0 || !cartId}
+                disabled={loading || data.stock === 0 || cartId === undefined}
               >
                 <Minus />
               </button>
@@ -137,7 +137,7 @@ export function ProductInfo({ data, countInCart, cartId }: IProps) {
               <button
                 onClick={() => updateCartQuantity("add")}
                 className={cn(styles.product_info_nav_btn, "primary_btn")}
-                disabled={loading || data.stock === 0 || !cartId}
+                disabled={loading || data.stock === 0 || cartId === undefined}
               >
                 <Plus />
               </button>
@@ -147,7 +147,7 @@ export function ProductInfo({ data, countInCart, cartId }: IProps) {
               id={styles.add_to_cart}
               onClick={() => updateCartQuantity("add")}
               className="primary_btn"
-              disabled={loading || data.stock === 0 || !cartId}
+              disabled={loading || data.stock === 0 || cartId === undefined}
             >
               Add to cart
             </button>

@@ -1,4 +1,4 @@
-export const storyProductData = {
+export const mockedProductData = {
   id: 1,
   title: "Essence Mascara Lash Princess",
   description:
