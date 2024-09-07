@@ -3,25 +3,67 @@ import Cart from "@/assets/icons/common/cart.svg?svgr";
 import Plus from "@/assets/icons/common/plus.svg?svgr";
 import Minus from "@/assets/icons/common/minus.svg?svgr";
 
-import { getFinalPrice } from "@/utils";
+import { getFinalPrice, promiseToastError, promiseToastSuccess } from "@/utils";
 import { useState } from "react";
+import { useAppDispatch } from "@/store";
+
+import { updateProductsInCartByUserId } from "../cartDetails/cartDetailsSlice";
+import { toast } from "react-toastify";
 
 import { Link } from "react-router-dom";
 
 import type { IProduct } from "@/types";
 
 interface IProps {
+  cartId?: number;
   index: number;
   data: IProduct;
   countInCart: number;
 }
 
-export function ProductCard({ index, data, countInCart }: IProps) {
+export function ProductCard({ index, data, countInCart, cartId }: IProps) {
+  //locale state to avoid all item list rendering
+  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useAppDispatch();
+
   const [counterValue, setCounterValue] = useState(countInCart);
 
   const url = `product/${data.id}`;
 
   const price = getFinalPrice(data.price, data.discountPercentage);
+
+  const updateCartQuantity = async (action: "add" | "remove") => {
+    const isPending = toast.loading("Sending data...");
+    setIsLoading(true);
+
+    let prevValue = counterValue;
+    let newValue = counterValue;
+
+    if (action === "add") {
+      newValue++;
+      setCounterValue((counterValue) => counterValue + 1);
+    } else if (action === "remove") {
+      newValue--;
+      setCounterValue((counterValue) => counterValue - 1);
+    }
+
+    let dto = {
+      products: [{ id: data.id, quantity: newValue }],
+      cartId: cartId as number,
+      action,
+    };
+
+    await dispatch(updateProductsInCartByUserId(dto))
+      .unwrap()
+      .then(() => {
+        promiseToastSuccess(isPending, "Success");
+      })
+      .catch((err) => {
+        setCounterValue(prevValue);
+        promiseToastError(isPending, err);
+      })
+      .finally(() => setIsLoading(false));
+  };
 
   return (
     <li aria-label={`product card № ${index}`} className={styles.product_card}>
@@ -51,33 +93,37 @@ export function ProductCard({ index, data, countInCart }: IProps) {
           {counterValue > 0 ? (
             <>
               <button
-                onClick={() =>
-                  setCounterValue((counterValue) => counterValue - 1)
-                }
+                data-testid="decrease_product"
+                onClick={() => updateCartQuantity("remove")}
                 className="primary_btn"
+                disabled={isLoading || cartId === undefined}
               >
                 <Minus />
               </button>
 
-              <span>{`${counterValue} item${
-                counterValue > 1 ? "s" : ""
-              }`}</span>
+              <span>
+                {`${counterValue} item${counterValue > 1 ? "s" : ""}`}
+              </span>
 
               <button
-                onClick={() =>
-                  setCounterValue((counterValue) => counterValue + 1)
-                }
+                data-testid="increase_product"
                 className="primary_btn"
+                onClick={() => updateCartQuantity("add")}
+                disabled={
+                  isLoading ||
+                  data.stock === counterValue ||
+                  cartId === undefined
+                }
               >
                 <Plus />
               </button>
             </>
           ) : (
             <button
-              onClick={() =>
-                setCounterValue((counterValue) => counterValue + 1)
-              }
+              data-testid="add_to_cart_btn"
+              onClick={() => updateCartQuantity("add")}
               className="primary_btn"
+              disabled={isLoading || data.stock === 0 || cartId === undefined}
             >
               <Cart />
             </button>

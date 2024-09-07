@@ -1,16 +1,25 @@
-import { Outlet } from "react-router-dom";
+import "react-toastify/dist/ReactToastify.css";
 
-import { Header } from "@/components/header/Header";
-import { Footer } from "@/components/footer/Footer";
+import { ToastContainer } from "react-toastify";
+import { PrivateRootLayout } from "./PrivateRootLayout";
+import { PublicRootLayout } from "./PublicRootLayout";
 
-export function RootLayout() {
+export function RootLayout({ isPrivate }: { isPrivate: boolean }) {
   return (
     <>
-      <Header />
-      <main>
-        <Outlet />
-      </main>
-      <Footer />
+      {isPrivate ? <PrivateRootLayout /> : <PublicRootLayout />}
+      <ToastContainer
+        position="top-right"
+        autoClose={3000}
+        hideProgressBar={true}
+        newestOnTop={true}
+        closeOnClick
+        rtl={false}
+        pauseOnFocusLoss
+        draggable
+        pauseOnHover
+        theme="colored"
+      />
     </>
   );
 }

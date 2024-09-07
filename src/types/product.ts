@@ -6,6 +6,7 @@ export interface IShortProduct {
   total: number;
   discountPercentage: number;
   discountedTotal: number;
+  discountedPrice?: number;
   thumbnail: string;
 }
 
@@ -70,6 +71,12 @@ export interface IProductListRequest {
 
 export interface IProductRequest {
   id: string;
+}
+
+export interface IUpdateCartRequest {
+  products: { id: number; quantity: number }[];
+  cartId: number;
+  action: "add" | "remove" | "clear";
 }
 
 export type ProductResponse = IProduct;

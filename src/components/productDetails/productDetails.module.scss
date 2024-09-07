@@ -3,9 +3,9 @@
 .product_details {
   display: flex;
   margin: 48px auto 114px;
+  width: 100%;
   padding: 0px 30px;
-  width: calc(100% - 60px);
-  max-width: 1180px;
+  max-width: calc(1180px + 30px * 2);
 
   &_content {
     display: flex;
@@ -19,8 +19,6 @@
   .product_details {
     padding: 0px 20px;
 
-    width: calc(100% - 40px);
-
     &_content {
       align-items: center;
       flex-direction: column;
@@ -32,6 +30,5 @@
 @media (max-width: $md) {
   .product_details {
     padding: 0px 16px;
-    width: calc(100% - 32x);
   }
 }

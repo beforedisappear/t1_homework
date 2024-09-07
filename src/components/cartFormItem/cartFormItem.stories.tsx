@@ -1,10 +1,18 @@
 import sneakersImg from "@/assets/images/productGallery/sneakers.jpg";
 
 import { BrowserRouter as Router } from "react-router-dom";
+import { CartFormItem } from "./CartFormItem";
+import { store } from "@/store";
+import { Provider } from "react-redux";
 
 import type { Meta } from "@storybook/react";
+import type { PropsWithChildren } from "react";
 
-import { CartFormItem } from "./CartFormItem";
+const MockedProviders = ({ children }: PropsWithChildren) => (
+  <Provider store={store}>
+    <Router>{children}</Router>
+  </Provider>
+);
 
 const meta: Meta<typeof CartFormItem> = {
   title: "Molecules/CartFormItem",
@@ -12,8 +20,9 @@ const meta: Meta<typeof CartFormItem> = {
 };
 
 export const Primary = () => (
-  <Router>
+  <MockedProviders>
     <CartFormItem
+      cartId={0}
       index={0}
       data={{
         id: 1,
@@ -26,12 +35,13 @@ export const Primary = () => (
         thumbnail: sneakersImg,
       }}
     />
-  </Router>
+  </MockedProviders>
 );
 
 export const Deleted = () => (
-  <Router>
+  <MockedProviders>
     <CartFormItem
+      cartId={0}
       index={0}
       data={{
         id: 1,
@@ -44,7 +54,7 @@ export const Deleted = () => (
         thumbnail: sneakersImg,
       }}
     />
-  </Router>
+  </MockedProviders>
 );
 
 export default meta;

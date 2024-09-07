@@ -54,8 +54,6 @@
 
 @media (max-width: $xxl) {
   .cart_details {
-    padding: 0px 20px;
-
     &_content {
       column-gap: 20px;
     }
@@ -64,7 +62,8 @@
 
 @media (max-width: $lg) {
   .cart_details {
-    padding: 0px 16px;
+    padding: 0px 20px;
+
     row-gap: 20px;
 
     &_title {
@@ -80,5 +79,11 @@
       row-gap: 20px;
       flex-direction: column;
     }
+  }
+}
+
+@media (max-width: $md) {
+  .cart_details {
+    padding: 0px 16px;
   }
 }

@@ -4,32 +4,65 @@ import Star from "@/assets/icons/productInfo/star.svg?svgr";
 import Plus from "@/assets/icons/common/plus2.svg?svgr";
 import Minus from "@/assets/icons/common/minus2.svg?svgr";
 
-import { getFinalPrice } from "@/utils";
+import { v4 as uuidv4 } from "uuid";
+import { getFinalPrice, promiseToastError, promiseToastSuccess } from "@/utils";
+import { toast } from "react-toastify";
+
+import { updateProductsInCartByUserId } from "../cartDetails/cartDetailsSlice";
+import { useAppDispatch, useAppSelector } from "@/store";
+import { useState } from "react";
 
 import type { IProduct } from "@/types";
-import { useState } from "react";
 
 interface IProps {
   data: IProduct;
   countInCart?: number;
+  cartId: number | undefined;
 }
 
-export function ProductInfo({ data, countInCart }: IProps) {
+export function ProductInfo({ data, countInCart, cartId }: IProps) {
+  const dispatch = useAppDispatch();
+  const { loading } = useAppSelector(
+    (state) => state.cartDetailsSlice.updateCart
+  );
   const [counterValue, setCounterValue] = useState(countInCart || 0);
 
-  const stars = [];
-  let rating = Math.ceil(data.rating);
+  let rating = Math.round(data.rating);
 
-  let activeStar = (
-    <Star className={cn(styles.product_info_rating_star, styles.active)} />
-  );
+  let activeStarClass = cn(styles.product_info_rating_star, styles.active);
 
-  let inactiveStar = <Star className={styles.product_info_rating_star} />;
+  let inactiveStarClass = styles.product_info_rating_star;
 
-  stars.push(
-    ...new Array(rating).fill(activeStar),
-    ...new Array(5 - rating).fill(inactiveStar)
-  );
+  const updateCartQuantity = async (action: "add" | "remove") => {
+    const isPending = toast.loading("Sending data...");
+
+    let prevValue = counterValue;
+    let newValue = counterValue;
+
+    if (action === "add") {
+      setCounterValue((counterValue) => counterValue + 1);
+      newValue++;
+    } else if (action === "remove") {
+      setCounterValue((counterValue) => counterValue - 1);
+      newValue--;
+    }
+
+    let dto = {
+      products: [{ id: data.id, quantity: newValue }],
+      cartId: cartId as number,
+      action,
+    };
+
+    await dispatch(updateProductsInCartByUserId(dto))
+      .unwrap()
+      .then(() => {
+        promiseToastSuccess(isPending, "Success");
+      })
+      .catch((err) => {
+        setCounterValue(prevValue);
+        promiseToastError(isPending, err);
+      });
+  };
 
   return (
     <section className={styles.product_info}>
@@ -37,8 +70,22 @@ export function ProductInfo({ data, countInCart }: IProps) {
         <h1>{data.title}</h1>
 
         <div className={styles.product_info_about}>
-          <div className={styles.product_info_rating}>{stars}</div>
-          <span className={styles.product_info_category}>{data.category}</span>
+          <div className={styles.product_info_rating}>
+            {new Array(5).fill("_").map((_) => {
+              let star = (
+                <Star
+                  key={uuidv4()}
+                  className={rating > 0 ? activeStarClass : inactiveStarClass}
+                />
+              );
+
+              rating--;
+              return star;
+            })}
+          </div>
+          <span className={styles.product_info_category}>
+            {data.tags.join(", ")}
+          </span>
         </div>
       </div>
 
@@ -78,10 +125,9 @@ export function ProductInfo({ data, countInCart }: IProps) {
           {counterValue > 0 ? (
             <>
               <button
-                onClick={() =>
-                  setCounterValue((counterValue) => counterValue - 1)
-                }
+                onClick={() => updateCartQuantity("remove")}
                 className={cn(styles.product_info_nav_btn, "primary_btn")}
+                disabled={loading || data.stock === 0 || cartId === undefined}
               >
                 <Minus />
               </button>
@@ -91,10 +137,9 @@ export function ProductInfo({ data, countInCart }: IProps) {
               </span>
 
               <button
-                onClick={() =>
-                  setCounterValue((counterValue) => counterValue + 1)
-                }
+                onClick={() => updateCartQuantity("add")}
                 className={cn(styles.product_info_nav_btn, "primary_btn")}
+                disabled={loading || data.stock === 0 || cartId === undefined}
               >
                 <Plus />
               </button>
@@ -102,10 +147,9 @@ export function ProductInfo({ data, countInCart }: IProps) {
           ) : (
             <button
               id={styles.add_to_cart}
-              onClick={() =>
-                setCounterValue((counterValue) => counterValue + 1)
-              }
+              onClick={() => updateCartQuantity("add")}
               className="primary_btn"
+              disabled={loading || data.stock === 0 || cartId === undefined}
             >
               Add to cart
             </button>

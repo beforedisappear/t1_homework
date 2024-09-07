@@ -108,10 +108,14 @@
   &_buy {
     display: flex;
     align-items: center;
+    flex-wrap: wrap;
     justify-content: space-between;
-    height: 86px;
-    width: calc(100% - 12px * 2);
+    min-height: 86px;
+    height: auto;
+    row-gap: 16px;
+    width: 100%;
     padding: 12px;
+    border-radius: 6px;
     background: rgba(0, 0, 0, 0.04);
 
     &.loading {
@@ -158,6 +162,7 @@
       font-weight: 400;
       line-height: 24px;
       color: #444b58;
+      text-align: center;
     }
 
     &_value {
@@ -171,7 +176,7 @@
   &_nav {
     display: flex;
     align-items: center;
-    column-gap: 30px;
+    column-gap: 16px;
 
     > span {
       text-align: center;

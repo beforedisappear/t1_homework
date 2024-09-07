@@ -1,26 +1,37 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
+import { RootState } from "@/store";
 import type {
-  ICartRequest,
-  ICartResponse,
+  // ICartRequest,
+  // ICartResponse,
   IProductListRequest,
   IProductListResponse,
   IProductRequest,
   ProductResponse,
+  // IUpdateCartRequest,
+  // ICart,
 } from "@/types";
+import { createQueryString } from "@/utils";
 
 const dataApi = createApi({
   reducerPath: "dataApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://dummyjson.com" }),
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://dummyjson.com",
+    prepareHeaders: (headers, { getState }) => {
+      const token = (getState() as RootState).authSlice.token;
+      if (token) headers.set("authorization", `Bearer ${token}`);
+      return headers;
+    },
+  }),
 
   endpoints: (builder) => ({
-    getUserCart: builder.query<ICartResponse, ICartRequest>({
-      query: ({ id }) => `/carts/user/${id}`,
-    }),
+    // getUserCart: builder.query<ICartResponse, ICartRequest>({
+    //   query: ({ id }) => `/carts/user/${id}`,
+    // }),
 
     getProductList: builder.query<IProductListResponse, IProductListRequest>({
       query: ({ q, page = 0, limit = 12 }) =>
-        `/products/search?q=${q}&limit=${limit}&skip=${page * limit}`,
+        `/products/search?${createQueryString(Object.entries({ skip: page * limit, q }))}`,
 
       serializeQueryArgs: ({ endpointName }) => {
         return endpointName;
@@ -40,20 +51,32 @@ const dataApi = createApi({
       },
 
       forceRefetch({ currentArg, previousArg }) {
-        return currentArg !== previousArg;
+        return (
+          currentArg?.q !== previousArg?.q ||
+          currentArg?.page !== previousArg?.page
+        );
       },
     }),
 
     getProductById: builder.query<ProductResponse, IProductRequest>({
       query: ({ id }) => `/products/${id}`,
     }),
+
+    // updateUserCart: builder.mutation<ICart, IUpdateCartRequest>({
+    //   query: ({ products, cartId }) => ({
+    //     url: `/carts/${cartId}`,
+    //     method: "PUT",
+    //     body: { merge: false, products },
+    //   }),
+    // }),
   }),
 });
 
 export const {
-  useGetUserCartQuery,
+  // useGetUserCartQuery,
   useGetProductListQuery,
   useGetProductByIdQuery,
+  // useUpdateUserCartMutation,
 } = dataApi;
 
 export default dataApi;

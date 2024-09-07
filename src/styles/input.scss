@@ -2,7 +2,7 @@
   color: #444b58;
   background: #f6f6f6;
   padding: 20px;
-  border: unset;
+  border: 1px solid #f6f6f6;
   border-radius: 4px;
 
   font-size: 16px;
@@ -11,5 +11,10 @@
 
   &::placeholder {
     color: #b2b5bb;
+  }
+
+  &.invalid {
+    color: red;
+    border-color: red;
   }
 }
