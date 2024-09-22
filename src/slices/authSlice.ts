@@ -22,8 +22,8 @@ const authSlice = createSlice({
       .addMatcher(
         authApi.endpoints.login.matchFulfilled,
         (state, { payload }) => {
-          state.token = payload.token;
-          localStorage.setItem("token", payload.token);
+          state.token = payload.accessToken;
+          localStorage.setItem("token", payload.accessToken);
         }
       )
       .addMatcher(userApi.endpoints.getUser.matchRejected, (state, action) => {

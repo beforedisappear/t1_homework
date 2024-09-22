@@ -15,7 +15,10 @@ import { useNavigate } from "react-router-dom";
 
 export function LoginForm() {
   const navigate = useNavigate();
-  const form = useForm<LoginForm>({ mode: "onSubmit" });
+  const form = useForm<LoginForm>({
+    mode: "onSubmit",
+    defaultValues: { username: "oliviaw", password: "oliviawpass" },
+  });
   const { handleSubmit } = form;
 
   const [login, { isLoading }] = useLoginMutation();

@@ -5,7 +5,7 @@ export interface IAuthDataRequest {
 }
 
 export interface IAuthDataResponse {
-  token: string;
+  accessToken: string;
   refreshToken: string;
   id: number;
   username: string;
